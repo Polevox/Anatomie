@@ -1,1 +1,1269 @@
-# Anatomie
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomia Latina — Leer het Geraamte</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #f5efe6;
+    --parchment: #ede4d3;
+    --ink: #1a1410;
+    --sepia: #6b4f2a;
+    --rust: #c0392b;
+    --sage: #4a6741;
+    --gold: #c9962a;
+    --muted: #8a7560;
+    --card-bg: #faf6ef;
+    --correct: #4a6741;
+    --wrong: #c0392b;
+    --neutral: #c9962a;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bone);
+color: var(–ink);
+font-family: ‘DM Sans’, sans-serif;
+min-height: 100vh;
+background-image:
+radial-gradient(ellipse at 20% 0%, rgba(201,150,42,0.08) 0%, transparent 60%),
+radial-gradient(ellipse at 80% 100%, rgba(107,79,42,0.07) 0%, transparent 60%);
+}
+
+/* HEADER */
+header {
+text-align: center;
+padding: 3rem 2rem 2rem;
+border-bottom: 1px solid var(–parchment);
+position: relative;
+}
+header::before {
+content: ‘☩’;
+display: block;
+font-size: 1.2rem;
+color: var(–gold);
+margin-bottom: 0.5rem;
+opacity: 0.6;
+}
+header h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(2rem, 5vw, 3.5rem);
+font-weight: 700;
+letter-spacing: -0.02em;
+line-height: 1.1;
+}
+header h1 em {
+font-style: italic;
+color: var(–sepia);
+}
+header p {
+margin-top: 0.75rem;
+color: var(–muted);
+font-size: 0.95rem;
+font-weight: 300;
+max-width: 480px;
+margin-left: auto;
+margin-right: auto;
+}
+
+/* NAV TABS */
+nav {
+display: flex;
+justify-content: center;
+gap: 0.5rem;
+padding: 1.5rem 1rem;
+flex-wrap: wrap;
+}
+nav button {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.75rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 0.5rem 1.2rem;
+border: 1.5px solid var(–parchment);
+background: transparent;
+color: var(–muted);
+cursor: pointer;
+border-radius: 2px;
+transition: all 0.2s;
+}
+nav button:hover { color: var(–ink); border-color: var(–sepia); }
+nav button.active {
+background: var(–ink);
+color: var(–bone);
+border-color: var(–ink);
+}
+
+/* MAIN CONTAINER */
+main {
+max-width: 860px;
+margin: 0 auto;
+padding: 1rem 1.5rem 4rem;
+}
+
+/* SECTION TITLES */
+.section-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.4rem;
+font-style: italic;
+color: var(–sepia);
+margin-bottom: 0.25rem;
+}
+.section-sub {
+font-size: 0.82rem;
+color: var(–muted);
+font-family: ‘DM Mono’, monospace;
+letter-spacing: 0.05em;
+margin-bottom: 1.5rem;
+}
+
+/* ====== WOORDENBOEK TAB ====== */
+#tab-woorden { display: none; }
+#tab-woorden.active { display: block; }
+
+.search-bar {
+width: 100%;
+padding: 0.75rem 1rem;
+border: 1.5px solid var(–parchment);
+background: var(–card-bg);
+font-family: ‘DM Mono’, monospace;
+font-size: 0.9rem;
+color: var(–ink);
+border-radius: 2px;
+margin-bottom: 1.5rem;
+outline: none;
+transition: border-color 0.2s;
+}
+.search-bar:focus { border-color: var(–sepia); }
+.search-bar::placeholder { color: var(–muted); }
+
+.filter-row {
+display: flex;
+gap: 0.5rem;
+flex-wrap: wrap;
+margin-bottom: 1.5rem;
+}
+.filter-btn {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.7rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 0.3rem 0.8rem;
+border: 1px solid var(–parchment);
+background: transparent;
+color: var(–muted);
+cursor: pointer;
+border-radius: 2px;
+transition: all 0.15s;
+}
+.filter-btn:hover, .filter-btn.active {
+background: var(–sepia);
+color: var(–bone);
+border-color: var(–sepia);
+}
+
+.word-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+gap: 0.75rem;
+}
+.word-card {
+background: var(–card-bg);
+border: 1px solid var(–parchment);
+border-radius: 3px;
+padding: 1rem 1.1rem;
+cursor: pointer;
+transition: all 0.2s;
+position: relative;
+overflow: hidden;
+}
+.word-card::before {
+content: ‘’;
+position: absolute;
+left: 0; top: 0; bottom: 0;
+width: 3px;
+background: var(–parchment);
+transition: background 0.2s;
+}
+.word-card:hover { border-color: var(–sepia); box-shadow: 0 2px 12px rgba(107,79,42,0.1); }
+.word-card:hover::before { background: var(–gold); }
+.word-card.bot::before { background: #c9962a44; }
+.word-card.gewricht::before { background: #4a674144; }
+.word-card.ligament::before { background: #c0392b44; }
+.word-card.spier::before { background: #2c5f8a44; }
+.word-card.richting::before { background: #8a4a7044; }
+
+.word-card .latin {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+font-weight: 700;
+color: var(–ink);
+}
+.word-card .tag {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 0.4rem;
+display: block;
+}
+.word-card .meaning {
+font-size: 0.85rem;
+color: var(–sepia);
+margin-top: 0.3rem;
+}
+.word-card .example {
+font-size: 0.75rem;
+color: var(–muted);
+margin-top: 0.4rem;
+font-style: italic;
+display: none;
+}
+.word-card.expanded .example { display: block; }
+.word-card .expand-hint {
+font-size: 0.68rem;
+color: var(–gold);
+font-family: ‘DM Mono’, monospace;
+margin-top: 0.5rem;
+opacity: 0.7;
+}
+
+/* ====== QUIZ TAB ====== */
+#tab-quiz { display: none; }
+#tab-quiz.active { display: block; }
+
+.quiz-settings {
+display: flex;
+gap: 0.75rem;
+flex-wrap: wrap;
+margin-bottom: 2rem;
+align-items: center;
+}
+.quiz-settings select, .quiz-settings button {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.8rem;
+padding: 0.5rem 1rem;
+border: 1.5px solid var(–parchment);
+background: var(–card-bg);
+color: var(–ink);
+cursor: pointer;
+border-radius: 2px;
+outline: none;
+}
+.quiz-settings button {
+background: var(–ink);
+color: var(–bone);
+border-color: var(–ink);
+letter-spacing: 0.05em;
+text-transform: uppercase;
+font-size: 0.72rem;
+}
+.quiz-settings button:hover { background: var(–sepia); border-color: var(–sepia); }
+
+#quiz-area { display: none; }
+#quiz-area.active { display: block; }
+
+.progress-bar {
+height: 3px;
+background: var(–parchment);
+border-radius: 2px;
+margin-bottom: 2rem;
+overflow: hidden;
+}
+.progress-fill {
+height: 100%;
+background: var(–gold);
+border-radius: 2px;
+transition: width 0.4s ease;
+}
+.progress-text {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.72rem;
+color: var(–muted);
+text-align: right;
+margin-top: 0.3rem;
+margin-bottom: 1.5rem;
+}
+
+.question-card {
+background: var(–card-bg);
+border: 1.5px solid var(–parchment);
+border-radius: 4px;
+padding: 2rem 2rem 1.5rem;
+margin-bottom: 1.5rem;
+animation: fadeUp 0.3s ease;
+}
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(8px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.question-type {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.68rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 0.75rem;
+}
+.question-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.5rem;
+font-weight: 700;
+color: var(–ink);
+margin-bottom: 0.5rem;
+}
+.question-hint {
+font-size: 0.82rem;
+color: var(–muted);
+margin-bottom: 1.5rem;
+font-style: italic;
+}
+
+.options {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0.6rem;
+}
+@media (max-width: 500px) { .options { grid-template-columns: 1fr; } }
+
+.option-btn {
+text-align: left;
+padding: 0.75rem 1rem;
+border: 1.5px solid var(–parchment);
+background: white;
+color: var(–ink);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.88rem;
+cursor: pointer;
+border-radius: 3px;
+transition: all 0.15s;
+line-height: 1.3;
+}
+.option-btn:hover:not(:disabled) { border-color: var(–gold); background: #fdf8f0; }
+.option-btn.correct { background: #eaf3e8; border-color: var(–correct); color: var(–correct); font-weight: 500; }
+.option-btn.wrong { background: #faeaea; border-color: var(–wrong); color: var(–wrong); }
+.option-btn:disabled { cursor: default; }
+
+.feedback-box {
+margin-top: 1rem;
+padding: 0.85rem 1rem;
+border-radius: 3px;
+font-size: 0.85rem;
+display: none;
+}
+.feedback-box.show { display: block; animation: fadeUp 0.2s ease; }
+.feedback-box.correct { background: #eaf3e8; color: var(–correct); border-left: 3px solid var(–correct); }
+.feedback-box.wrong { background: #faeaea; color: var(–wrong); border-left: 3px solid var(–wrong); }
+.feedback-box strong { font-weight: 600; }
+
+.next-btn {
+display: none;
+margin-top: 1rem;
+width: 100%;
+padding: 0.85rem;
+background: var(–ink);
+color: var(–bone);
+border: none;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.78rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+cursor: pointer;
+border-radius: 2px;
+transition: background 0.2s;
+}
+.next-btn:hover { background: var(–sepia); }
+.next-btn.show { display: block; }
+
+/* Score screen */
+#score-screen {
+display: none;
+text-align: center;
+padding: 3rem 2rem;
+background: var(–card-bg);
+border: 1.5px solid var(–parchment);
+border-radius: 4px;
+animation: fadeUp 0.4s ease;
+}
+#score-screen.show { display: block; }
+.score-number {
+font-family: ‘Playfair Display’, serif;
+font-size: 5rem;
+font-weight: 700;
+line-height: 1;
+color: var(–ink);
+}
+.score-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.78rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–muted);
+margin-top: 0.5rem;
+margin-bottom: 2rem;
+}
+.score-feedback {
+font-size: 1rem;
+color: var(–sepia);
+font-style: italic;
+font-family: ‘Playfair Display’, serif;
+margin-bottom: 2rem;
+}
+.restart-btn {
+padding: 0.75rem 2rem;
+background: var(–ink);
+color: var(–bone);
+border: none;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.78rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+cursor: pointer;
+border-radius: 2px;
+transition: background 0.2s;
+}
+.restart-btn:hover { background: var(–sepia); }
+
+/* ====== ANATOMIE TAB ====== */
+#tab-anatomie { display: none; }
+#tab-anatomie.active { display: block; }
+
+.anatomy-filter {
+display: flex;
+gap: 0.5rem;
+flex-wrap: wrap;
+margin-bottom: 1.5rem;
+}
+
+.term-list {
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+}
+.term-item {
+background: var(–card-bg);
+border: 1px solid var(–parchment);
+border-radius: 3px;
+padding: 0.85rem 1rem;
+cursor: pointer;
+transition: all 0.2s;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0.5rem;
+align-items: start;
+}
+.term-item:hover { border-color: var(–sepia); }
+.term-item .term-latin {
+font-family: ‘Playfair Display’, serif;
+font-weight: 700;
+font-size: 0.95rem;
+}
+.term-item .term-nl {
+font-size: 0.83rem;
+color: var(–sepia);
+text-align: right;
+}
+.term-item .term-breakdown {
+grid-column: 1 / -1;
+font-size: 0.78rem;
+color: var(–muted);
+font-style: italic;
+display: none;
+padding-top: 0.4rem;
+border-top: 1px solid var(–parchment);
+margin-top: 0.2rem;
+}
+.term-item.expanded .term-breakdown { display: block; }
+.term-tag {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 0.15rem 0.4rem;
+border-radius: 2px;
+display: inline-block;
+margin-bottom: 0.2rem;
+}
+.tag-bot { background: #c9962a22; color: var(–gold); }
+.tag-gewricht { background: #4a674122; color: var(–sage); }
+.tag-ligament { background: #c0392b22; color: var(–rust); }
+.tag-spier { background: #2c5f8a22; color: #2c5f8a; }
+
+/* ====== STATS BAR ====== */
+.stats-bar {
+display: flex;
+gap: 1.5rem;
+padding: 0.75rem 1rem;
+background: var(–card-bg);
+border: 1px solid var(–parchment);
+border-radius: 3px;
+margin-bottom: 1.5rem;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.75rem;
+}
+.stat { display: flex; flex-direction: column; gap: 0.1rem; }
+.stat-val { font-weight: 500; color: var(–ink); font-size: 1.1rem; }
+.stat-lbl { color: var(–muted); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+footer {
+text-align: center;
+padding: 2rem;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+color: var(–muted);
+text-transform: uppercase;
+border-top: 1px solid var(–parchment);
+margin-top: 3rem;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1><em>Anatomia</em> Latina</h1>
+  <p>Leer de Latijnse namen van het bewegingsapparaat — botten, gewrichten, ligamenten en spieren</p>
+</header>
+
+<nav>
+  <button class="active" onclick="switchTab('woorden', this)">📖 Woordenboek</button>
+  <button onclick="switchTab('quiz', this)">🧠 Quiz</button>
+  <button onclick="switchTab('anatomie', this)">🦴 Anatomische Termen</button>
+</nav>
+
+<main>
+
+  <!-- ======= TAB: WOORDENBOEK ======= -->
+
+  <div id="tab-woorden" class="active">
+    <p class="section-title">Latijnse Wortelwoorden</p>
+    <p class="section-sub">Klik op een kaart voor voorbeelden · filter op categorie</p>
+
+```
+<input class="search-bar" type="text" placeholder="Zoek een woord... (bijv. humerus, tibia, collaterale)" id="search-input" oninput="filterWords()">
+
+<div class="filter-row" id="filter-row">
+  <button class="filter-btn active" onclick="setFilter('all', this)">Alles</button>
+  <button class="filter-btn" onclick="setFilter('bot', this)">🦴 Botten</button>
+  <button class="filter-btn" onclick="setFilter('gewricht', this)">⭕ Gewrichten</button>
+  <button class="filter-btn" onclick="setFilter('ligament', this)">🔗 Ligamenten</button>
+  <button class="filter-btn" onclick="setFilter('spier', this)">💪 Spieren</button>
+  <button class="filter-btn" onclick="setFilter('richting', this)">🧭 Richting/Positie</button>
+  <button class="filter-btn" onclick="setFilter('lichaamsdeel', this)">👤 Lichaamsdelen</button>
+</div>
+
+<div class="word-grid" id="word-grid"></div>
+```
+
+  </div>
+
+  <!-- ======= TAB: QUIZ ======= -->
+
+  <div id="tab-quiz">
+    <p class="section-title">Quiz jezelf</p>
+    <p class="section-sub">Kies een modus en test je kennis</p>
+
+```
+<div class="stats-bar">
+  <div class="stat"><span class="stat-val" id="stat-correct">0</span><span class="stat-lbl">Goed</span></div>
+  <div class="stat"><span class="stat-val" id="stat-wrong">0</span><span class="stat-lbl">Fout</span></div>
+  <div class="stat"><span class="stat-val" id="stat-streak">0</span><span class="stat-lbl">Streak</span></div>
+</div>
+
+<div class="quiz-settings">
+  <select id="quiz-category">
+    <option value="all">Alle categorieën</option>
+    <option value="bot">Alleen botten</option>
+    <option value="gewricht">Alleen gewrichten</option>
+    <option value="ligament">Alleen ligamenten</option>
+    <option value="spier">Alleen spieren</option>
+    <option value="richting">Alleen richtingen</option>
+  </select>
+  <select id="quiz-mode">
+    <option value="lat2nl">Latijn → Nederlands</option>
+    <option value="nl2lat">Nederlands → Latijn</option>
+    <option value="mixed">Gemengd</option>
+    <option value="ligconnect">🔗 Ligament verbindt… (Lat→Lat)</option>
+  </select>
+  <select id="quiz-count">
+    <option value="10">10 vragen</option>
+    <option value="20">20 vragen</option>
+    <option value="50">50 vragen</option>
+    <option value="999">Alle woorden</option>
+  </select>
+  <button onclick="startQuiz()">▶ Start Quiz</button>
+</div>
+
+<div id="quiz-area">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-text" id="progress-text"></div>
+
+  <div class="question-card" id="question-card">
+    <div class="question-type" id="question-type"></div>
+    <div class="question-text" id="question-text"></div>
+    <div class="question-hint" id="question-hint"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback-box" id="feedback-box"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Volgende vraag →</button>
+  </div>
+</div>
+
+<div id="score-screen">
+  <div class="score-number" id="final-score"></div>
+  <div class="score-label">vragen goed beantwoord</div>
+  <div class="score-feedback" id="score-feedback"></div>
+  <button class="restart-btn" onclick="restartQuiz()">↺ Opnieuw</button>
+</div>
+```
+
+  </div>
+
+  <!-- ======= TAB: ANATOMISCHE TERMEN ======= -->
+
+  <div id="tab-anatomie">
+    <p class="section-title">Volledige Anatomische Termen</p>
+    <p class="section-sub">Klik op een term om de opbouw te zien · klik op de filter om te sorteren</p>
+
+```
+<div class="anatomy-filter" id="anat-filter">
+  <button class="filter-btn active" onclick="setAnatFilter('all', this)">Alles</button>
+  <button class="filter-btn" onclick="setAnatFilter('bot', this)">🦴 Ossa</button>
+  <button class="filter-btn" onclick="setAnatFilter('gewricht', this)">⭕ Articulationes</button>
+  <button class="filter-btn" onclick="setAnatFilter('ligament', this)">🔗 Ligamenta</button>
+  <button class="filter-btn" onclick="setAnatFilter('ligconnect', this)">🗺️ Lig. Verbindingen</button>
+  <button class="filter-btn" onclick="setAnatFilter('spier', this)">💪 Musculi</button>
+</div>
+
+<div class="term-list" id="term-list"></div>
+```
+
+  </div>
+
+</main>
+
+<footer>Anatomia Latina · gemaakt voor de studie fysiotherapie / geneeskunde</footer>
+
+<script>
+// ============================
+// DATA
+// ============================
+
+const WORDS = [
+  // BOTTEN
+  { lat: "os / ossa", nl: "bot / botten", cat: "bot", ex: "os coxae (heupbot), ossa carpi (handwortelbeentjes)" },
+  { lat: "humerus", nl: "opperarm(bot)", cat: "bot", ex: "art. humeri (schoudergewricht), lig. collaterale humeri" },
+  { lat: "radius", nl: "spaakbeen", cat: "bot", ex: "art. radiocarpalis, lig. collaterale radiale" },
+  { lat: "ulna", nl: "ellepijp", cat: "bot", ex: "art. radioulnaris, processus styloideus ulnae" },
+  { lat: "femur", nl: "dijbeen", cat: "bot", ex: "caput femoris, art. femorotibialis" },
+  { lat: "tibia", nl: "scheenbeen", cat: "bot", ex: "lig. collaterale tibiale, art. tibiofibularis" },
+  { lat: "fibula", nl: "kuitbeen", cat: "bot", ex: "malleolus fibulae, art. tibiofibularis" },
+  { lat: "patella", nl: "knieschijf", cat: "bot", ex: "lig. patellae, retinaculum patellae" },
+  { lat: "calcaneus", nl: "hielbeen", cat: "bot", ex: "lig. calcaneofibulare, tendo calcanei" },
+  { lat: "talus", nl: "sprongbeen", cat: "bot", ex: "art. talocruralis (bovenste spronggewricht)" },
+  { lat: "carpus", nl: "handwortelbeentjes", cat: "bot", ex: "art. radiocarpalis, ossa carpi" },
+  { lat: "tarsus", nl: "voetwortelbeentjes", cat: "bot", ex: "art. tarsalis, ossa tarsi" },
+  { lat: "vertebra / vertebrae", nl: "wervel / wervels", cat: "bot", ex: "vertebra cervicalis, thoracalis, lumbalis" },
+  { lat: "costa / costae", nl: "rib / ribben", cat: "bot", ex: "art. costovertebralis, costa vera" },
+  { lat: "sternum", nl: "borstbeen", cat: "bot", ex: "art. sternoclavicularis, corpus sterni" },
+  { lat: "clavicula", nl: "sleutelbeen", cat: "bot", ex: "art. sternoclavicularis, lig. coracoclaviculare" },
+  { lat: "scapula", nl: "schouderblad", cat: "bot", ex: "art. humeri, spina scapulae, fossa supraspinata" },
+  { lat: "pelvis / coxae", nl: "bekken / heupbot", cat: "bot", ex: "os coxae, art. coxae, lig. inguinale" },
+  { lat: "sacrum", nl: "heiligbeen", cat: "bot", ex: "art. sacroiliaca, canalis sacralis" },
+  { lat: "cranium", nl: "schedel", cat: "bot", ex: "sutura coronalis, os frontale, os temporale" },
+  { lat: "mandibula", nl: "onderkaak", cat: "bot", ex: "art. temporomandibularis, caput mandibulae" },
+  { lat: "phalanx / phalanges", nl: "vingerkoot / vingerkootjes", cat: "bot", ex: "phalanx proximalis / media / distalis" },
+  { lat: "metacarpus", nl: "middenhandsbeentjes", cat: "bot", ex: "ossa metacarpi I–V" },
+  { lat: "metatarsus", nl: "middenvoetsbeentjes", cat: "bot", ex: "ossa metatarsi I–V" },
+  { lat: "caput", nl: "hoofd / kop (van een bot)", cat: "bot", ex: "caput femoris, caput humeri, caput mandibulae" },
+  { lat: "collum", nl: "hals (van een bot)", cat: "bot", ex: "collum femoris, collum chirurgicum humeri" },
+  { lat: "condylus", nl: "knokkel / gewrichtsknobbel", cat: "bot", ex: "condylus medialis/lateralis femoris" },
+  { lat: "malleolus", nl: "enkelknobbel", cat: "bot", ex: "malleolus medialis (tibia), malleolus lateralis (fibula)" },
+  { lat: "processus", nl: "uitsteeksel", cat: "bot", ex: "processus styloideus, processus coracoideus, processus spinosus" },
+  { lat: "spina", nl: "doorn / uitsteeksel", cat: "bot", ex: "spina iliaca anterior superior (SIAS), spina scapulae" },
+  { lat: "fossa", nl: "groeve / holte", cat: "bot", ex: "fossa supraspinata, fossa olecrani, fossa acetabuli" },
+  { lat: "foramen", nl: "gat / opening", cat: "bot", ex: "foramen magnum, foramen obturatum, foramen vertebrale" },
+  { lat: "trochanter", nl: "beenbult (bij femur)", cat: "bot", ex: "trochanter major, trochanter minor" },
+  { lat: "epicondylus", nl: "bovenknobbel", cat: "bot", ex: "epicondylus lateralis / medialis humeri" },
+  { lat: "acetabulum", nl: "gewrichtskom (heup)", cat: "bot", ex: "fossa acetabuli, labrum acetabulare" },
+  { lat: "olecranon", nl: "elleboogsknobbel", cat: "bot", ex: "fossa olecrani, bursa olecrani" },
+
+  // GEWRICHTEN
+  { lat: "articulatio (art.)", nl: "gewricht", cat: "gewricht", ex: "art. humeri, art. coxae, art. genus" },
+  { lat: "genus", nl: "knie", cat: "gewricht", ex: "art. genus, lig. genus, meniscus" },
+  { lat: "coxae", nl: "heup(gewricht)", cat: "gewricht", ex: "art. coxae, os coxae" },
+  { lat: "talocruralis", nl: "bovenste spronggewricht", cat: "gewricht", ex: "art. talocruralis (talocrurale gewricht)" },
+  { lat: "subtalaris", nl: "onderste spronggewricht", cat: "gewricht", ex: "art. subtalaris, sinus tarsi" },
+  { lat: "glenohumeralis", nl: "schoudergewricht (echt)", cat: "gewricht", ex: "art. glenohumeralis, capsula articularis" },
+  { lat: "acromioclavicularis", nl: "AC-gewricht", cat: "gewricht", ex: "art. acromioclavicularis, lig. acromioclaviculare" },
+  { lat: "sternoclavicularis", nl: "SC-gewricht", cat: "gewricht", ex: "art. sternoclavicularis" },
+  { lat: "cubiti", nl: "elleboog", cat: "gewricht", ex: "art. cubiti = humeroulnaris + humeroradialis + radioulnaris" },
+  { lat: "carpometacarpalis", nl: "handwortel-middenhandsgewricht", cat: "gewricht", ex: "art. carpometacarpalis pollicis (duimzadel)" },
+  { lat: "temporomandibularis", nl: "kaakgewricht", cat: "gewricht", ex: "art. temporomandibularis, discus articularis" },
+  { lat: "sacroiliaca", nl: "SI-gewricht", cat: "gewricht", ex: "art. sacroiliaca, lig. sacroiliacum" },
+  { lat: "interphalangea", nl: "tussengewricht in vinger/teen", cat: "gewricht", ex: "art. interphalangea proximalis/distalis" },
+  { lat: "metatarsophalangea", nl: "MTP-gewricht", cat: "gewricht", ex: "art. metatarsophalangea hallucis" },
+
+  // LIGAMENTEN
+  { lat: "ligamentum (lig.)", nl: "gewrichtsband / ligament", cat: "ligament", ex: "lig. collaterale, lig. cruciatum" },
+  { lat: "collaterale", nl: "zij-steunband", cat: "ligament", ex: "lig. collaterale tibiale (mediale knie), lig. collaterale fibulare (laterale knie)" },
+  { lat: "cruciatum", nl: "kruisband", cat: "ligament", ex: "lig. cruciatum anterius / posterius (knie)" },
+  { lat: "patellae", nl: "van de knieschijf", cat: "ligament", ex: "lig. patellae (kniepees-achtig)" },
+  { lat: "deltoideum", nl: "driehoekige band (mediaal enkel)", cat: "ligament", ex: "lig. deltoideum (complex mediaal)" },
+  { lat: "calcaneofibulare", nl: "hiel-kuitbeen band", cat: "ligament", ex: "lig. calcaneofibulare (CFL, lateraal enkel)" },
+  { lat: "talofibulare", nl: "sprongbeen-kuitbeen band", cat: "ligament", ex: "lig. talofibulare anterius / posterius (ATFL/PTFL)" },
+  { lat: "iliofemorale", nl: "Y-band heup", cat: "ligament", ex: "lig. iliofemorale = sterkste band van het lichaam" },
+  { lat: "ischiofemorale", nl: "zitbeen-dijbeen band", cat: "ligament", ex: "lig. ischiofemorale (achterste heupband)" },
+  { lat: "pubofemorale", nl: "schaambeen-dijbeen band", cat: "ligament", ex: "lig. pubofemorale (onderste heupband)" },
+  { lat: "coracohumeral", nl: "ravenbekband schouder", cat: "ligament", ex: "lig. coracohumerale (bovenste schouderband)" },
+  { lat: "coracoclaviculare", nl: "ravenbek-sleutelbeen band", cat: "ligament", ex: "lig. coracoclaviculare (trapezoid + conoid)" },
+  { lat: "inguinale", nl: "liesband", cat: "ligament", ex: "lig. inguinale (van SIAS naar tuberculum pubicum)" },
+  { lat: "sacrotuberale", nl: "heilig-zitknobbelband", cat: "ligament", ex: "lig. sacrotuberale" },
+  { lat: "sacrospinale", nl: "heilig-werveldoornband", cat: "ligament", ex: "lig. sacrospinale" },
+
+  // SPIEREN
+  { lat: "musculus (m.) / musculi", nl: "spier / spieren", cat: "spier", ex: "m. deltoideus, m. quadriceps femoris" },
+  { lat: "deltoideus", nl: "driehoekige spier (schouder)", cat: "spier", ex: "m. deltoideus (pars clavicularis/acromialis/spinalis)" },
+  { lat: "quadriceps", nl: "vierhoofdige spier", cat: "spier", ex: "m. quadriceps femoris (rectus + 3x vastus)" },
+  { lat: "biceps", nl: "tweehoofdige spier", cat: "spier", ex: "m. biceps brachii, m. biceps femoris" },
+  { lat: "triceps", nl: "driehoofdige spier", cat: "spier", ex: "m. triceps brachii (caput longum/laterale/mediale)" },
+  { lat: "gastrocnemius", nl: "tweellingsspier (kuit)", cat: "spier", ex: "m. gastrocnemius (caput mediale/laterale)" },
+  { lat: "soleus", nl: "platvoetvormige kuitspier", cat: "spier", ex: "m. soleus (samen met gastrocnemius → m. triceps surae)" },
+  { lat: "gluteus", nl: "bilspier", cat: "spier", ex: "m. gluteus maximus/medius/minimus" },
+  { lat: "iliopsoas", nl: "lendenheupspierspier", cat: "spier", ex: "m. iliopsoas = m. iliacus + m. psoas major" },
+  { lat: "trapezius", nl: "trapeziumspier", cat: "spier", ex: "m. trapezius (pars descendens/transversa/ascendens)" },
+  { lat: "latissimus dorsi", nl: "brede rugspier", cat: "spier", ex: "m. latissimus dorsi" },
+  { lat: "rectus", nl: "rechte spier", cat: "spier", ex: "m. rectus femoris, m. rectus abdominis" },
+  { lat: "vastus", nl: "uitgestrekte/brede spier", cat: "spier", ex: "m. vastus medialis/lateralis/intermedius" },
+  { lat: "adductor", nl: "spier die naar middellijn trekt", cat: "spier", ex: "m. adductor longus/brevis/magnus" },
+  { lat: "abductor", nl: "spier die van middellijn wegtrekt", cat: "spier", ex: "m. abductor pollicis, m. gluteus medius" },
+  { lat: "flexor", nl: "buigspier", cat: "spier", ex: "m. flexor digitorum superficialis / profundus" },
+  { lat: "extensor", nl: "strekspier", cat: "spier", ex: "m. extensor digitorum, m. extensor hallucis longus" },
+  { lat: "rotator", nl: "draaiende spier", cat: "spier", ex: "rotatoren manchet (supraspinatus, infraspinatus, teres minor, subscapularis)" },
+  { lat: "hallucis", nl: "van de grote teen", cat: "spier", ex: "m. extensor hallucis longus, m. flexor hallucis brevis" },
+  { lat: "digitorum", nl: "van de vingers/tenen", cat: "spier", ex: "m. flexor digitorum superficialis, m. extensor digitorum" },
+  { lat: "pollicis", nl: "van de duim", cat: "spier", ex: "m. flexor pollicis longus, m. abductor pollicis brevis" },
+
+  // RICHTINGEN & POSITIES
+  { lat: "anterior", nl: "voor / ventraal", cat: "richting", ex: "lig. talofibulare anterius, capsula anterior" },
+  { lat: "posterior", nl: "achter / dorsaal", cat: "richting", ex: "lig. talofibulare posterius, kruisband posterior" },
+  { lat: "medialis", nl: "aan de middenkant", cat: "richting", ex: "meniscus medialis, malleolus medialis" },
+  { lat: "lateralis", nl: "aan de buitenkant", cat: "richting", ex: "meniscus lateralis, condylus lateralis" },
+  { lat: "superior", nl: "bovenste", cat: "richting", ex: "spina iliaca anterior superior, art. radioulnaris superior" },
+  { lat: "inferior", nl: "onderste", cat: "richting", ex: "art. radioulnaris inferior, labrum inferius" },
+  { lat: "proximalis", nl: "dichtstbij het romp", cat: "richting", ex: "phalanx proximalis, art. radioulnaris proximalis" },
+  { lat: "distalis", nl: "ver van het romp", cat: "richting", ex: "phalanx distalis, radioulnaris distalis" },
+  { lat: "profundus", nl: "diep / diepgelegen", cat: "richting", ex: "m. flexor digitorum profundus, fascia profunda" },
+  { lat: "superficialis", nl: "oppervlakkig", cat: "richting", ex: "m. flexor digitorum superficialis" },
+  { lat: "longus", nl: "lang", cat: "richting", ex: "m. peroneus longus, m. extensor hallucis longus" },
+  { lat: "brevis", nl: "kort", cat: "richting", ex: "m. peroneus brevis, m. extensor hallucis brevis" },
+  { lat: "magnus", nl: "groot", cat: "richting", ex: "m. adductor magnus, foramen magnum" },
+  { lat: "minor / minimus", nl: "klein / kleinste", cat: "richting", ex: "m. gluteus minimus, m. teres minor" },
+  { lat: "major / maximus", nl: "groot / grootste", cat: "richting", ex: "trochanter major, m. gluteus maximus" },
+  { lat: "dorsalis", nl: "achterkant / rugkant / bovenkant voet", cat: "richting", ex: "a. dorsalis pedis, ligamentum dorsale" },
+  { lat: "plantaris", nl: "voetzoolkant", cat: "richting", ex: "fascia plantaris, lig. plantare longum" },
+  { lat: "volaris / palmaris", nl: "handpalmkant", cat: "richting", ex: "lig. carpi transversum, m. palmaris longus" },
+
+  // LICHAAMSDELEN
+  { lat: "brachii", nl: "van de bovenarm", cat: "lichaamsdeel", ex: "m. biceps brachii, m. triceps brachii" },
+  { lat: "antebrachii", nl: "van de onderarm", cat: "lichaamsdeel", ex: "fascia antebrachii" },
+  { lat: "femoris", nl: "van het dijbeen", cat: "lichaamsdeel", ex: "caput femoris, m. quadriceps femoris" },
+  { lat: "cruris", nl: "van het onderbeen", cat: "lichaamsdeel", ex: "fascia cruris" },
+  { lat: "pedis", nl: "van de voet", cat: "lichaamsdeel", ex: "dorsum pedis, fascia plantaris, ossa pedis" },
+  { lat: "manus", nl: "van de hand", cat: "lichaamsdeel", ex: "dorsum manus, ossa manus" },
+  { lat: "cervicalis", nl: "van de nek (cervicaal)", cat: "lichaamsdeel", ex: "vertebra cervicalis, m. sternocleidomastoideus" },
+  { lat: "thoracalis", nl: "van de borstkas (thoracaal)", cat: "lichaamsdeel", ex: "vertebra thoracalis, costa" },
+  { lat: "lumbalis", nl: "van de lenden (lumbaal)", cat: "lichaamsdeel", ex: "vertebra lumbalis, m. erector spinae lumbalis" },
+  { lat: "iliacus / iliaca", nl: "van het darmbeen", cat: "lichaamsdeel", ex: "spina iliaca, crista iliaca, fossa iliaca" },
+  { lat: "ischiadicus / ischii", nl: "van het zitbeen", cat: "lichaamsdeel", ex: "tuber ischiadicum, n. ischiadicus" },
+  { lat: "pubis", nl: "van het schaambeen", cat: "lichaamsdeel", ex: "symphysis pubis, tuberculum pubicum, lig. pubofemorale" },
+  { lat: "acromion", nl: "schouderdak", cat: "lichaamsdeel", ex: "art. acromioclavicularis, m. supraspinatus onder acromion" },
+  { lat: "coracoideus", nl: "ravenbekuitsteeksel", cat: "lichaamsdeel", ex: "processus coracoideus, lig. coracohumerale" },
+  { lat: "glenoid", nl: "gewrichtspannetje schouder", cat: "lichaamsdeel", ex: "cavitas glenoidalis, labrum glenoidale" },
+];
+
+const ANAT_TERMS = [
+  // OSSA
+  { lat: "Os coxae", nl: "Heupbot", cat: "bot", breakdown: "os = bot · coxae = van de heup" },
+  { lat: "Os sacrum", nl: "Heiligbeen", cat: "bot", breakdown: "os = bot · sacrum = heilig (vanwege rituele offers)" },
+  { lat: "Os femoris (femur)", nl: "Dijbeen", cat: "bot", breakdown: "femur = dijbeen" },
+  { lat: "Patella", nl: "Knieschijf", cat: "bot", breakdown: "patella = kleine pan / schotel" },
+  { lat: "Tibia", nl: "Scheenbeen", cat: "bot", breakdown: "tibia = fluit (vanwege de vorm)" },
+  { lat: "Fibula", nl: "Kuitbeen", cat: "bot", breakdown: "fibula = gesp / sluiting (naast tibia)" },
+  { lat: "Calcaneus", nl: "Hielbeen", cat: "bot", breakdown: "calx / calcis = hiel" },
+  { lat: "Talus", nl: "Sprongbeen", cat: "bot", breakdown: "talus = enkel / dobbelsteenvorm" },
+  { lat: "Humerus", nl: "Opperarmbeen", cat: "bot", breakdown: "humerus = schouder/bovenarm" },
+  { lat: "Radius", nl: "Spaakbeen", cat: "bot", breakdown: "radius = spaak / straal" },
+  { lat: "Ulna", nl: "Ellepijp", cat: "bot", breakdown: "ulna = elleboog / pijp" },
+  { lat: "Clavicula", nl: "Sleutelbeen", cat: "bot", breakdown: "clavicula = sleuteltje (vanwege slotje-vorm)" },
+  { lat: "Scapula", nl: "Schouderblad", cat: "bot", breakdown: "scapula = schep / blad" },
+  { lat: "Sternum", nl: "Borstbeen", cat: "bot", breakdown: "sternum = borst" },
+  { lat: "Vertebra lumbalis", nl: "Lendenwervel", cat: "bot", breakdown: "vertebra = wervel · lumbalis = lenden" },
+  { lat: "Vertebra cervicalis", nl: "Halswervel", cat: "bot", breakdown: "vertebra = wervel · cervicalis = van de nek (cervix)" },
+  { lat: "Spina iliaca anterior superior (SIAS)", nl: "Voorste bovenste darmbeen doorn", cat: "bot", breakdown: "spina = doorn · iliaca = darmbeen · anterior = voor · superior = boven" },
+  { lat: "Caput femoris", nl: "Dijbeenkop", cat: "bot", breakdown: "caput = hoofd/kop · femoris = van het dijbeen" },
+  { lat: "Collum femoris", nl: "Dijbeenhals", cat: "bot", breakdown: "collum = hals · femoris = van het dijbeen" },
+  { lat: "Trochanter major", nl: "Grote rollenheuvel", cat: "bot", breakdown: "trochanter = rollenheuvel · major = groot" },
+  { lat: "Condylus medialis femoris", nl: "Mediale dijbeenknobbel", cat: "bot", breakdown: "condylus = knobbel · medialis = aan mediale zijde · femoris = dijbeen" },
+  { lat: "Malleolus medialis", nl: "Mediale enkelknobbel", cat: "bot", breakdown: "malleolus = kleine hamer/knobbel · medialis = binnenkant (= tibia)" },
+  { lat: "Malleolus lateralis", nl: "Laterale enkelknobbel", cat: "bot", breakdown: "malleolus = knobbel · lateralis = buitenkant (= fibula)" },
+  { lat: "Olecranon", nl: "Elleboogsknobbel", cat: "bot", breakdown: "olecranon = punt van de ellepijp" },
+  { lat: "Epicondylus lateralis humeri", nl: "Laterale bovenknobbel opperarmbeen", cat: "bot", breakdown: "epi = boven · condylus = knobbel · lateralis = buitenkant · humeri = opperarmbeen" },
+  { lat: "Processus coracoideus", nl: "Ravenbekuitsteeksel", cat: "bot", breakdown: "processus = uitsteeksel · coracoideus = ravenbek-vormig" },
+  { lat: "Acromion", nl: "Schouderdak", cat: "bot", breakdown: "akron = top · omos = schouder → top van de schouder" },
+
+  // ARTICULATIONES
+  { lat: "Art. humeri (glenohumeralis)", nl: "Schoudergewricht", cat: "gewricht", breakdown: "articulatio = gewricht · humeri = van de humerus (opperarmbeen)" },
+  { lat: "Art. coxae", nl: "Heupgewricht", cat: "gewricht", breakdown: "articulatio = gewricht · coxae = van de heup" },
+  { lat: "Art. genus", nl: "Kniegewricht", cat: "gewricht", breakdown: "articulatio = gewricht · genus = knie" },
+  { lat: "Art. talocruralis", nl: "Bovenste spronggewricht", cat: "gewricht", breakdown: "articulatio = gewricht · talus = sprongbeen · cruralis = van het onderbeen" },
+  { lat: "Art. subtalaris", nl: "Onderste spronggewricht", cat: "gewricht", breakdown: "sub = onder · talaris = van de talus" },
+  { lat: "Art. sacroiliaca", nl: "SI-gewricht", cat: "gewricht", breakdown: "articulatio = gewricht · sacro = heiligbeen · iliaca = darmbeen" },
+  { lat: "Art. acromioclavicularis", nl: "AC-gewricht", cat: "gewricht", breakdown: "acromion = schouderdak · clavicularis = van het sleutelbeen" },
+  { lat: "Art. sternoclavicularis", nl: "SC-gewricht", cat: "gewricht", breakdown: "sternum = borstbeen · clavicularis = sleutelbeen" },
+  { lat: "Art. cubiti", nl: "Ellebooggewricht", cat: "gewricht", breakdown: "cubiti = van de elleboog (cubitus = elleboog)" },
+  { lat: "Art. radiocarpalis", nl: "Polsgewricht", cat: "gewricht", breakdown: "radius = spaakbeen · carpalis = van de handwortelbeentjes" },
+  { lat: "Art. temporomandibularis", nl: "Kaakgewricht", cat: "gewricht", breakdown: "temporalis = slaapbeen · mandibularis = onderkaak" },
+  { lat: "Art. interphalangea proximalis (PIP)", nl: "Proximaal tussengewricht vinger", cat: "gewricht", breakdown: "inter = tussen · phalanges = vingerkootjes · proximalis = dichtstbij hand" },
+
+  // LIGAMENTA
+  { lat: "Lig. collaterale tibiale", nl: "Mediaal knieligament", cat: "ligament", breakdown: "ligamentum = band · collaterale = zijdelings · tibiale = van het scheenbeen" },
+  { lat: "Lig. collaterale fibulare", nl: "Lateraal knieligament", cat: "ligament", breakdown: "ligamentum = band · collaterale = zijdelings · fibulare = van het kuitbeen" },
+  { lat: "Lig. cruciatum anterius", nl: "Voorste kruisband", cat: "ligament", breakdown: "cruciatum = kruis(vormig) · anterius = voor" },
+  { lat: "Lig. cruciatum posterius", nl: "Achterste kruisband", cat: "ligament", breakdown: "cruciatum = kruisvormig · posterius = achter" },
+  { lat: "Lig. patellae", nl: "Kniepees/knieschijfband", cat: "ligament", breakdown: "ligamentum = band · patellae = van de knieschijf" },
+  { lat: "Lig. talofibulare anterius (ATFL)", nl: "Voorste enkel-kuitbeenband", cat: "ligament", breakdown: "talus = sprongbeen · fibulare = kuitbeen · anterius = voor" },
+  { lat: "Lig. calcaneofibulare (CFL)", nl: "Hiel-kuitbeenband", cat: "ligament", breakdown: "calcaneus = hielbeen · fibulare = kuitbeen" },
+  { lat: "Lig. deltoideum", nl: "Mediale enkelbandcomplex", cat: "ligament", breakdown: "deltoideum = driehoekig (delta = Griekse Δ)" },
+  { lat: "Lig. iliofemorale", nl: "Iliofemorale band (Y-band)", cat: "ligament", breakdown: "iliaca = darmbeen · femorale = dijbeen · sterkste ligament" },
+  { lat: "Lig. coracoclaviculare", nl: "Ravenbek-sleutelbeenband", cat: "ligament", breakdown: "coracoid = ravenbek · claviculare = sleutelbeen" },
+  { lat: "Lig. inguinale", nl: "Liesband", cat: "ligament", breakdown: "inguinale = van de lies (inguen = lies)" },
+  { lat: "Lig. plantare longum", nl: "Lang voetzoolligament", cat: "ligament", breakdown: "plantare = voetzool · longum = lang" },
+  { lat: "Lig. sacrotuberale", nl: "Heiligbeen-zitknobbelband", cat: "ligament", breakdown: "sacrum = heiligbeen · tuberale = van de knobbel (tuber ischiadicum)" },
+
+  // MUSCULI
+  { lat: "M. quadriceps femoris", nl: "Vierhoofds dijspier", cat: "spier", breakdown: "musculus = spier · quadri = vier · caput = hoofd · femoris = dijbeen" },
+  { lat: "M. biceps femoris", nl: "Tweehoofdige hamstring", cat: "spier", breakdown: "bi = twee · caput = hoofd · femoris = dijbeen" },
+  { lat: "M. gluteus maximus", nl: "Grote bilspier", cat: "spier", breakdown: "gluteus = bil · maximus = grootste" },
+  { lat: "M. gluteus medius", nl: "Middelste bilspier", cat: "spier", breakdown: "gluteus = bil · medius = middel" },
+  { lat: "M. iliopsoas", nl: "Lende-heupspierspier", cat: "spier", breakdown: "iliacus = darmbeen · psoas = lendenspier (Grieks)" },
+  { lat: "M. gastrocnemius", nl: "Tweellingsspier (kuit)", cat: "spier", breakdown: "gaster = buik · kneme = been → dikke buik van het been" },
+  { lat: "M. soleus", nl: "Platvoetvormige kuitspier", cat: "spier", breakdown: "solea = zool / platvijs (platte vorm)" },
+  { lat: "M. tibialis anterior", nl: "Voorste scheenbeenspier", cat: "spier", breakdown: "tibialis = van het scheenbeen · anterior = voor" },
+  { lat: "M. extensor hallucis longus", nl: "Lange strekker grote teen", cat: "spier", breakdown: "extensor = strekker · hallucis = grote teen · longus = lang" },
+  { lat: "M. flexor digitorum superficialis", nl: "Oppervlakkige vingerbuiger", cat: "spier", breakdown: "flexor = buiger · digitorum = van de vingers · superficialis = oppervlakkig" },
+  { lat: "M. deltoideus", nl: "Deltaspier", cat: "spier", breakdown: "deltoideus = driehoekig (delta Δ) · pars clavicularis/acromialis/spinalis" },
+  { lat: "M. supraspinatus", nl: "Bovenste rotator manchet spier", cat: "spier", breakdown: "supra = boven · spina = doorn (van scapula)" },
+  { lat: "M. infraspinatus", nl: "Onderste rotator manchet spier", cat: "spier", breakdown: "infra = onder · spina = doorn scapula" },
+  { lat: "M. subscapularis", nl: "Schouderblad onderste spier", cat: "spier", breakdown: "sub = onder · scapularis = van het schouderblad" },
+  { lat: "M. adductor longus", nl: "Lange aanvoerende spier", cat: "spier", breakdown: "adductor = naar middellijn · longus = lang" },
+  { lat: "M. trapezius", nl: "Trapeziumspier", cat: "spier", breakdown: "trapezius = trapeziumvormig · pars descendens/transversa/ascendens" },
+  { lat: "M. latissimus dorsi", nl: "Brede rugspier", cat: "spier", breakdown: "latissimus = breedste · dorsi = van de rug" },
+  { lat: "M. erector spinae", nl: "Rugstrekker", cat: "spier", breakdown: "erector = oprichten · spinae = van de wervelkolom" },
+  { lat: "M. rectus abdominis", nl: "Rechte buikspier", cat: "spier", breakdown: "rectus = recht · abdominis = van de buik" },
+];
+
+// ============================
+// LIGAMENT VERBINDINGEN (voor Lat→Lat quiz)
+// ============================
+const LIGAMENTS = [
+  // KNIE
+  { name: "Lig. collaterale tibiale", van: "Condylus medialis femoris", naar: "Tibia (facies medialis)", regio: "Knie", nl: "Mediaal knieligament" },
+  { name: "Lig. collaterale fibulare", van: "Epicondylus lateralis femoris", naar: "Caput fibulae", regio: "Knie", nl: "Lateraal knieligament" },
+  { name: "Lig. cruciatum anterius", van: "Area intercondylaris anterior tibiae", naar: "Facies medialis condyli lateralis femoris", regio: "Knie", nl: "Voorste kruisband" },
+  { name: "Lig. cruciatum posterius", van: "Area intercondylaris posterior tibiae", naar: "Facies lateralis condyli medialis femoris", regio: "Knie", nl: "Achterste kruisband" },
+  { name: "Lig. patellae", van: "Apex patellae", naar: "Tuberositas tibiae", regio: "Knie", nl: "Knieschijfband" },
+  { name: "Lig. popliteum obliquum", van: "Condylus medialis tibiae", naar: "Condylus lateralis femoris", regio: "Knie", nl: "Schuin knieholteband" },
+
+  // ENKEL & VOET
+  { name: "Lig. talofibulare anterius (ATFL)", van: "Malleolus lateralis fibulae (anterior rand)", naar: "Collum tali", regio: "Enkel lateraal", nl: "Voorste enkel-kuitbeenband" },
+  { name: "Lig. talofibulare posterius (PTFL)", van: "Malleolus lateralis fibulae (posterior rand)", naar: "Tuberculum posterius tali", regio: "Enkel lateraal", nl: "Achterste enkel-kuitbeenband" },
+  { name: "Lig. calcaneofibulare (CFL)", van: "Malleolus lateralis fibulae", naar: "Calcaneus (facies lateralis)", regio: "Enkel lateraal", nl: "Hiel-kuitbeenband" },
+  { name: "Lig. deltoideum — pars tibionavicularis", van: "Malleolus medialis tibiae", naar: "Os naviculare", regio: "Enkel mediaal", nl: "Deltoidband (voorste deel)" },
+  { name: "Lig. deltoideum — pars tibiocalcanearis", van: "Malleolus medialis tibiae", naar: "Sustentaculum tali calcanei", regio: "Enkel mediaal", nl: "Deltoidband (middelste deel)" },
+  { name: "Lig. plantare longum", van: "Calcaneus (tuber calcanei)", naar: "Ossa metatarsi II–V / Os cuboideum", regio: "Voetzool", nl: "Lang voetzoolligament" },
+  { name: "Lig. calcaneonaviculare plantare", van: "Sustentaculum tali calcanei", naar: "Os naviculare", regio: "Voetzool", nl: "Lenteveerband (spring ligament)" },
+
+  // HEUP
+  { name: "Lig. iliofemorale", van: "Spina iliaca anterior inferior (SIAI)", naar: "Linea intertrochanterica femoris", regio: "Heup", nl: "Y-band (sterkste ligament)" },
+  { name: "Lig. ischiofemorale", van: "Os ischii (achter acetabulum)", naar: "Trochanter major femoris", regio: "Heup", nl: "Achterste heupband" },
+  { name: "Lig. pubofemorale", van: "Ramus superior ossis pubis", naar: "Trochanter minor femoris", regio: "Heup", nl: "Onderste heupband" },
+  { name: "Lig. capitis femoris (teres)", van: "Fossa acetabuli", naar: "Fovea capitis femoris", regio: "Heup", nl: "Ronde heupband (intraarticulair)" },
+
+  // BEKKEN & WERVELKOLOM
+  { name: "Lig. sacroiliacum anterius", van: "Os sacrum (facies pelvica)", naar: "Os ilium (facies auricularis)", regio: "Bekken", nl: "Voorste SI-band" },
+  { name: "Lig. sacrotuberale", van: "Os sacrum / os coccygis", naar: "Tuber ischiadicum", regio: "Bekken", nl: "Heiligbeen-zitknobbelband" },
+  { name: "Lig. sacrospinale", van: "Os sacrum / os coccygis", naar: "Spina ischiadica", regio: "Bekken", nl: "Heiligbeen-zitdoornband" },
+  { name: "Lig. inguinale", van: "Spina iliaca anterior superior (SIAS)", naar: "Tuberculum pubicum", regio: "Bekken", nl: "Liesband" },
+
+  // SCHOUDER
+  { name: "Lig. coracohumerale", van: "Processus coracoideus scapulae", naar: "Tuberculum majus humeri", regio: "Schouder", nl: "Ravenbek-bovenarmband" },
+  { name: "Lig. coracoclaviculare (pars trapezoidea)", van: "Processus coracoideus scapulae", naar: "Clavicula (linea trapezoidea)", regio: "Schouder", nl: "CC-band trapezoid deel" },
+  { name: "Lig. coracoclaviculare (pars conoidea)", van: "Processus coracoideus scapulae", naar: "Clavicula (tuberculum conoideum)", regio: "Schouder", nl: "CC-band conoïd deel" },
+  { name: "Lig. acromioclaviculare", van: "Acromion scapulae", naar: "Clavicula (extremitas acromialis)", regio: "Schouder", nl: "AC-band" },
+  { name: "Lig. glenohumerale superius", van: "Tuberculum supraglenoidale scapulae", naar: "Fovea capitis humeri", regio: "Schouder", nl: "Bovenste glenohumerale band" },
+  { name: "Lig. coracoacromiale", van: "Processus coracoideus scapulae", naar: "Acromion scapulae", regio: "Schouder", nl: "Coracoacromiale boog" },
+
+  // ELLEBOOG & POLS
+  { name: "Lig. collaterale ulnare (mediale elleboog)", van: "Epicondylus medialis humeri", naar: "Processus coronoideus / Olecranon ulnae", regio: "Elleboog", nl: "Mediaal elleboogligament" },
+  { name: "Lig. collaterale radiale (laterale elleboog)", van: "Epicondylus lateralis humeri", naar: "Anulare radii / Ulna", regio: "Elleboog", nl: "Lateraal elleboogligament" },
+  { name: "Lig. anulare radii", van: "Incisura radialis ulnae (anterior rand)", naar: "Incisura radialis ulnae (posterior rand)", regio: "Elleboog", nl: "Ringband van het spaakbeen" },
+  { name: "Lig. collaterale carpi radiale", van: "Processus styloideus radii", naar: "Os scaphoideum", regio: "Pols", nl: "Radiaal polsband" },
+  { name: "Lig. collaterale carpi ulnare", van: "Processus styloideus ulnae", naar: "Os triquetrum / Os pisiforme", regio: "Pols", nl: "Ulnair polsband" },
+
+  // WERVELKOLOM
+  { name: "Lig. longitudinale anterius", van: "Os occipitale / Atlas (C1)", naar: "Os sacrum (voorzijde wervelkolom)", regio: "Wervelkolom", nl: "Voorste lengteligament" },
+  { name: "Lig. longitudinale posterius", van: "Os occipitale / Axis (C2)", naar: "Os sacrum (achterzijde corpus)", regio: "Wervelkolom", nl: "Achterste lengteligament" },
+  { name: "Lig. flavum", van: "Lamina vertebrae superioris", naar: "Lamina vertebrae inferioris", regio: "Wervelkolom", nl: "Geel ligament (elastisch)" },
+  { name: "Lig. interspinale", van: "Processus spinosus vertebrae superioris", naar: "Processus spinosus vertebrae inferioris", regio: "Wervelkolom", nl: "Tussenstekelband" },
+  { name: "Lig. supraspinale", van: "Processus spinosus C7", naar: "Processus spinosus sacrum", regio: "Wervelkolom", nl: "Bovenstekelband" },
+];
+
+// ============================
+// STATE
+// ============================
+let currentFilter = 'all';
+let currentAnatFilter = 'all';
+let quizQuestions = [];
+let quizIndex = 0;
+let quizCorrect = 0;
+let quizWrong = 0;
+let quizStreak = 0;
+let totalCorrect = 0;
+let totalWrong = 0;
+let totalStreak = 0;
+let answered = false;
+
+// ============================
+// TAB SWITCHING
+// ============================
+function switchTab(name, btn) {
+  document.querySelectorAll('[id^="tab-"]').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ============================
+// WOORDENBOEK
+// ============================
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('#filter-row .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWords();
+}
+
+function filterWords() { renderWords(); }
+
+function renderWords() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const grid = document.getElementById('word-grid');
+  const filtered = WORDS.filter(w => {
+    const catMatch = currentFilter === 'all' || w.cat === currentFilter;
+    const searchMatch = !q || w.lat.toLowerCase().includes(q) || w.nl.toLowerCase().includes(q) || w.ex.toLowerCase().includes(q);
+    return catMatch && searchMatch;
+  });
+
+  grid.innerHTML = filtered.map((w, i) => `
+    <div class="word-card ${w.cat}" onclick="toggleCard(this)">
+      <span class="tag">${catLabel(w.cat)}</span>
+      <div class="latin">${w.lat}</div>
+      <div class="meaning">${w.nl}</div>
+      <div class="example">voorbeeld: ${w.ex}</div>
+      <div class="expand-hint">→ klik voor voorbeeld</div>
+    </div>
+  `).join('');
+}
+
+function toggleCard(el) {
+  el.classList.toggle('expanded');
+  const hint = el.querySelector('.expand-hint');
+  hint.textContent = el.classList.contains('expanded') ? '↑ klik om te sluiten' : '→ klik voor voorbeeld';
+}
+
+function catLabel(cat) {
+  const map = { bot: '🦴 Bot', gewricht: '⭕ Gewricht', ligament: '🔗 Ligament', spier: '💪 Spier', richting: '🧭 Richting', lichaamsdeel: '👤 Lichaamsdeel' };
+  return map[cat] || cat;
+}
+
+// ============================
+// QUIZ
+// ============================
+function startQuiz() {
+  const cat = document.getElementById('quiz-category').value;
+  const mode = document.getElementById('quiz-mode').value;
+  const count = parseInt(document.getElementById('quiz-count').value);
+
+  if (mode === 'ligconnect') {
+    // Ligament verbindingen quiz — negeer categorie-filter
+    let pool = shuffle([...LIGAMENTS]).slice(0, Math.min(count, LIGAMENTS.length));
+    quizQuestions = pool.map(l => ({ ligament: l, dir: 'ligconnect' }));
+  } else {
+    let pool = cat === 'all' ? WORDS : WORDS.filter(w => w.cat === cat);
+    pool = shuffle([...pool]).slice(0, Math.min(count, pool.length));
+    quizQuestions = pool.map(w => {
+      let dir = mode === 'mixed' ? (Math.random() > 0.5 ? 'lat2nl' : 'nl2lat') : mode;
+      return { word: w, dir };
+    });
+  }
+
+  quizIndex = 0;
+  quizCorrect = 0;
+  quizWrong = 0;
+  quizStreak = 0;
+  answered = false;
+
+  document.getElementById('quiz-area').classList.add('active');
+  document.getElementById('score-screen').classList.remove('show');
+  showQuestion();
+}
+
+function showQuestion() {
+  if (quizIndex >= quizQuestions.length) { endQuiz(); return; }
+  answered = false;
+  const q = quizQuestions[quizIndex];
+
+  if (q.dir === 'ligconnect') {
+    showLigamentQuestion(q.ligament);
+    return;
+  }
+
+  const { word, dir } = q;
+  const total = quizQuestions.length;
+  const pct = (quizIndex / total) * 100;
+
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${quizIndex + 1} / ${total}`;
+  document.getElementById('question-type').textContent = dir === 'lat2nl' ? '🔤 Wat betekent dit Latijnse woord?' : '🇳🇱 Wat is het Latijn hiervoor?';
+  document.getElementById('question-text').textContent = dir === 'lat2nl' ? word.lat : word.nl;
+  document.getElementById('question-hint').textContent = `Categorie: ${catLabel(word.cat)}`;
+
+  const correct = dir === 'lat2nl' ? word.nl : word.lat;
+  const wrongs = shuffle(WORDS.filter(w => w !== word && w.cat === word.cat)).slice(0, 3).map(w => dir === 'lat2nl' ? w.nl : w.lat);
+  if (wrongs.length < 3) {
+    const extras = shuffle(WORDS.filter(w => w !== word && !wrongs.includes(dir === 'lat2nl' ? w.nl : w.lat))).slice(0, 3 - wrongs.length).map(w => dir === 'lat2nl' ? w.nl : w.lat);
+    wrongs.push(...extras);
+  }
+  const options = shuffle([correct, ...wrongs.slice(0, 3)]);
+
+  document.getElementById('options').innerHTML = options.map(opt => `
+    <button class="option-btn" onclick="selectOption(this, '${escapeQ(opt)}', '${escapeQ(correct)}')">${opt}</button>
+  `).join('');
+
+  document.getElementById('feedback-box').className = 'feedback-box';
+  document.getElementById('feedback-box').innerHTML = '';
+  document.getElementById('next-btn').classList.remove('show');
+}
+
+function showLigamentQuestion(lig) {
+  const total = quizQuestions.length;
+  const pct = (quizIndex / total) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${quizIndex + 1} / ${total}`;
+
+  // Randomly ask either "van" or "naar"
+  const askVan = Math.random() > 0.5;
+  const correct = askVan ? lig.van : lig.naar;
+  const otherSide = askVan ? lig.naar : lig.van;
+
+  document.getElementById('question-type').textContent = `🔗 Ligament verbinding — ${lig.regio}`;
+  document.getElementById('question-text').textContent = lig.name;
+  document.getElementById('question-hint').textContent = askVan
+    ? `Dit ligament hecht aan de andere kant aan: ${otherSide} — waar hecht het vandáán?`
+    : `Dit ligament vertrekt vanuit: ${otherSide} — waar hecht het náár toe?`;
+
+  // Wrong options: other structures from other ligaments in LIGAMENTS pool
+  const wrongPool = shuffle(LIGAMENTS.filter(l => l !== lig));
+  const wrongs = [];
+  for (const l of wrongPool) {
+    const candidate = askVan ? l.van : l.naar;
+    if (!wrongs.includes(candidate) && candidate !== correct) wrongs.push(candidate);
+    if (wrongs.length >= 3) break;
+  }
+  // Fill up if needed with the other side of same pool
+  if (wrongs.length < 3) {
+    for (const l of wrongPool) {
+      const candidate = askVan ? l.naar : l.van;
+      if (!wrongs.includes(candidate) && candidate !== correct) wrongs.push(candidate);
+      if (wrongs.length >= 3) break;
+    }
+  }
+
+  const options = shuffle([correct, ...wrongs.slice(0, 3)]);
+
+  document.getElementById('options').innerHTML = options.map(opt => `
+    <button class="option-btn lig-opt" style="font-size:0.8rem;line-height:1.4"
+      onclick="selectLigOption(this, '${escapeQ(opt)}', '${escapeQ(correct)}')">${opt}</button>
+  `).join('');
+
+  document.getElementById('feedback-box').className = 'feedback-box';
+  document.getElementById('feedback-box').innerHTML = '';
+  document.getElementById('next-btn').classList.remove('show');
+}
+
+function selectLigOption(btn, selected, correct) {
+  if (answered) return;
+  answered = true;
+  const isCorrect = selected === correct;
+  const lig = quizQuestions[quizIndex].ligament;
+  document.querySelectorAll('.lig-opt').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correct) b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('feedback-box');
+  if (isCorrect) {
+    quizCorrect++; quizStreak++; totalCorrect++; totalStreak++;
+    fb.className = 'feedback-box correct show';
+    fb.innerHTML = `<strong>✓ Correct!</strong> <em>${lig.name}</em><br>
+      <span style="font-size:0.8rem">Van: <strong>${lig.van}</strong><br>Naar: <strong>${lig.naar}</strong></span>`;
+  } else {
+    quizWrong++; quizStreak = 0; totalWrong++; totalStreak = 0;
+    fb.className = 'feedback-box wrong show';
+    fb.innerHTML = `<strong>✗ Fout.</strong> <em>${lig.name}</em><br>
+      <span style="font-size:0.8rem">Van: <strong>${lig.van}</strong><br>Naar: <strong>${lig.naar}</strong></span>`;
+  }
+
+  document.getElementById('stat-correct').textContent = totalCorrect;
+  document.getElementById('stat-wrong').textContent = totalWrong;
+  document.getElementById('stat-streak').textContent = totalStreak;
+  document.getElementById('next-btn').classList.add('show');
+}
+
+function escapeQ(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+
+function selectOption(btn, selected, correct) {
+  if (answered) return;
+  answered = true;
+  const isCorrect = selected === correct;
+  const buttons = document.querySelectorAll('.option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correct) b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('feedback-box');
+  if (isCorrect) {
+    quizCorrect++; quizStreak++; totalCorrect++; totalStreak++;
+    fb.className = 'feedback-box correct show';
+    fb.innerHTML = `<strong>✓ Goed!</strong> ${quizQuestions[quizIndex].word.lat} = ${quizQuestions[quizIndex].word.nl}<br><em style="font-size:0.78rem">Voorbeeld: ${quizQuestions[quizIndex].word.ex}</em>`;
+  } else {
+    quizWrong++; quizStreak = 0; totalWrong++; totalStreak = 0;
+    fb.className = 'feedback-box wrong show';
+    fb.innerHTML = `<strong>✗ Fout.</strong> Het juiste antwoord was: <strong>${correct}</strong><br><em style="font-size:0.78rem">Voorbeeld: ${quizQuestions[quizIndex].word.ex}</em>`;
+  }
+
+  document.getElementById('stat-correct').textContent = totalCorrect;
+  document.getElementById('stat-wrong').textContent = totalWrong;
+  document.getElementById('stat-streak').textContent = totalStreak;
+  document.getElementById('next-btn').classList.add('show');
+}
+
+function nextQuestion() {
+  quizIndex++;
+  showQuestion();
+}
+
+function endQuiz() {
+  document.getElementById('quiz-area').classList.remove('active');
+  const screen = document.getElementById('score-screen');
+  screen.classList.add('show');
+  const pct = Math.round((quizCorrect / quizQuestions.length) * 100);
+  document.getElementById('final-score').textContent = `${quizCorrect}/${quizQuestions.length}`;
+  const feedbacks = ['Blijf oefenen!', 'Op de goede weg!', 'Aardig!', 'Goed gedaan!', 'Uitstekend!', 'Magistra/Magister!'];
+  const fi = Math.floor(pct / 20);
+  document.getElementById('score-feedback').textContent = feedbacks[Math.min(fi, 5)];
+}
+
+function restartQuiz() {
+  document.getElementById('score-screen').classList.remove('show');
+  document.getElementById('quiz-area').classList.remove('active');
+}
+
+// ============================
+// ANATOMISCHE TERMEN
+// ============================
+function setAnatFilter(cat, btn) {
+  currentAnatFilter = cat;
+  document.querySelectorAll('#anat-filter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAnat();
+}
+
+function renderAnat() {
+  const list = document.getElementById('term-list');
+
+  if (currentAnatFilter === 'ligconnect') {
+    // Group by regio
+    const byRegio = {};
+    LIGAMENTS.forEach(l => {
+      if (!byRegio[l.regio]) byRegio[l.regio] = [];
+      byRegio[l.regio].push(l);
+    });
+    list.innerHTML = Object.entries(byRegio).map(([regio, ligs]) => `
+      <div style="margin-bottom:1.5rem">
+        <div style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.4rem 0;border-bottom:1px solid var(--parchment);margin-bottom:0.5rem">${regio}</div>
+        ${ligs.map(l => `
+          <div class="term-item" onclick="this.classList.toggle('expanded')" style="grid-template-columns:1fr">
+            <div style="display:flex;justify-content:space-between;align-items:start">
+              <div>
+                <span class="term-tag tag-ligament">🔗 Ligament</span>
+                <div class="term-latin">${l.name}</div>
+                <div style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">${l.nl}</div>
+              </div>
+            </div>
+            <div class="term-breakdown" style="display:none">
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:0.3rem 0.75rem;margin-top:0.5rem">
+                <span style="color:var(--gold);font-weight:600">Van:</span><span>${l.van}</span>
+                <span style="color:var(--rust);font-weight:600">Naar:</span><span>${l.naar}</span>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+    // Fix expanded toggle for these items
+    list.querySelectorAll('.term-breakdown').forEach(el => el.style.display = '');
+    return;
+  }
+
+  const filtered = ANAT_TERMS.filter(t => currentAnatFilter === 'all' || t.cat === currentAnatFilter);
+  list.innerHTML = filtered.map(t => `
+    <div class="term-item" onclick="this.classList.toggle('expanded')">
+      <div>
+        <span class="term-tag tag-${t.cat}">${catLabel(t.cat)}</span>
+        <div class="term-latin">${t.lat}</div>
+      </div>
+      <div class="term-nl">${t.nl}</div>
+      <div class="term-breakdown">🔍 Opbouw: ${t.breakdown}</div>
+    </div>
+  `).join('');
+}
+
+// ============================
+// UTILS
+// ============================
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// INIT
+renderWords();
+renderAnat();
+</script>
+
+</body>
+</html>
