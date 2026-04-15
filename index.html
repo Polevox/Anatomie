@@ -522,6 +522,59 @@ text-transform: uppercase;
 border-top: 1px solid var(–parchment);
 margin-top: 3rem;
 }
+
+/* ANATOMY IMAGES */
+.anat-img-box {
+background: var(–card-bg);
+border: 1px solid var(–parchment);
+border-radius: 4px;
+overflow: hidden;
+margin-bottom: 1.25rem;
+}
+.anat-img-box img {
+width: 100%;
+max-height: 320px;
+object-fit: contain;
+display: block;
+background: white;
+padding: 0.5rem;
+}
+.anat-img-box .img-caption {
+padding: 0.5rem 0.85rem;
+font-size: 0.75rem;
+color: var(–sepia);
+font-style: italic;
+border-top: 1px solid var(–parchment);
+}
+.anat-img-box .img-credit {
+padding: 0.2rem 0.85rem 0.5rem;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.6rem;
+color: var(–muted);
+letter-spacing: 0.05em;
+}
+.img-error { display: none; }
+.quiz-img-box {
+margin-bottom: 1rem;
+border-radius: 3px;
+overflow: hidden;
+border: 1px solid var(–parchment);
+background: white;
+}
+.quiz-img-box img {
+width: 100%;
+max-height: 200px;
+object-fit: contain;
+display: block;
+padding: 0.4rem;
+}
+.quiz-img-box .img-caption {
+font-size: 0.68rem;
+color: var(–muted);
+padding: 0.3rem 0.7rem;
+font-style: italic;
+border-top: 1px solid var(–parchment);
+}
 </style>
 
 </head>
@@ -926,6 +979,390 @@ const LIGAMENTS = [
 ];
 
 // ============================
+// REGIO SVG DIAGRAMMEN (inline, geen externe afhankelijkheid)
+// ============================
+const REGION_IMAGES = {
+  "Knie": {
+    svg: `<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:280px;background:#fff;display:block">
+  <!-- Femur -->
+  <ellipse cx="120" cy="55" rx="28" ry="18" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <ellipse cx="220" cy="55" rx="28" ry="18" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <rect x="92" y="40" width="56" height="60" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <rect x="192" y="40" width="56" height="60" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="120" y="30" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Condylus medialis</text>
+  <text x="220" y="30" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Condylus lateralis</text>
+  <!-- Tibia -->
+  <rect x="95" y="195" width="50" height="80" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <rect x="195" y="195" width="50" height="80" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="120" y="290" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Tibia</text>
+  <text x="220" y="290" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Fibula / Caput</text>
+  <!-- Patella -->
+  <ellipse cx="170" cy="130" rx="20" ry="24" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="170" y="134" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Patella</text>
+  <!-- Lig. cruciatum anterius (blauw) -->
+  <line x1="130" y1="100" x2="200" y2="190" stroke="#2c5f8a" stroke-width="3" stroke-linecap="round"/>
+  <text x="148" y="158" font-size="8.5" fill="#2c5f8a" font-family="sans-serif" font-weight="bold">LCA</text>
+  <!-- Lig. cruciatum posterius (oranje) -->
+  <line x1="200" y1="100" x2="130" y2="190" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+  <text x="182" y="158" font-size="8.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">LCP</text>
+  <!-- Lig. collaterale tibiale (mediaal, groen) -->
+  <line x1="93" y1="98" x2="93" y2="196" stroke="#4a6741" stroke-width="4" stroke-linecap="round"/>
+  <text x="4" y="150" font-size="8" fill="#4a6741" font-family="sans-serif" font-weight="bold">Lig. coll.</text>
+  <text x="4" y="161" font-size="8" fill="#4a6741" font-family="sans-serif">tibiale</text>
+  <!-- Lig. collaterale fibulare (lateraal, goud) -->
+  <line x1="247" y1="98" x2="247" y2="196" stroke="#c9962a" stroke-width="4" stroke-linecap="round"/>
+  <text x="254" y="150" font-size="8" fill="#c9962a" font-family="sans-serif" font-weight="bold">Lig. coll.</text>
+  <text x="254" y="161" font-size="8" fill="#c9962a" font-family="sans-serif">fibulare</text>
+  <!-- Lig. patellae -->
+  <line x1="170" y1="154" x1="170" y2="154" x2="170" y2="194" stroke="#8a4a70" stroke-width="3" stroke-linecap="round"/>
+  <text x="175" y="178" font-size="8" fill="#8a4a70" font-family="sans-serif">Lig. patellae</text>
+  <!-- Menisci -->
+  <path d="M100,145 Q120,138 140,145" stroke="#555" stroke-width="2" fill="none"/>
+  <path d="M200,145 Q220,138 240,145" stroke="#555" stroke-width="2" fill="none"/>
+  <text x="105" y="158" font-size="7.5" fill="#555" font-family="sans-serif">Men. med.</text>
+  <text x="200" y="158" font-size="7.5" fill="#555" font-family="sans-serif">Men. lat.</text>
+  <!-- Legenda -->
+  <rect x="5" y="5" width="120" height="58" rx="3" fill="#faf6ef" stroke="#ede4d3" stroke-width="1"/>
+  <line x1="12" y1="17" x2="28" y2="17" stroke="#2c5f8a" stroke-width="2.5"/><text x="32" y="20" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. cruciatum anterius</text>
+  <line x1="12" y1="29" x2="28" y2="29" stroke="#c0392b" stroke-width="2.5"/><text x="32" y="32" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. cruciatum posterius</text>
+  <line x1="12" y1="41" x2="28" y2="41" stroke="#4a6741" stroke-width="2.5"/><text x="32" y="44" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. coll. tibiale</text>
+  <line x1="12" y1="53" x2="28" y2="53" stroke="#c9962a" stroke-width="2.5"/><text x="32" y="56" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. coll. fibulare</text>
+</svg>`,
+    caption: "Art. genus — ligamenten van het kniegewricht (vooraanzicht)",
+  },
+
+  "Enkel lateraal": {
+    svg: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:240px;background:#fff;display:block">
+  <!-- Fibula -->
+  <rect x="190" y="10" width="35" height="100" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="207" y="8" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Fibula</text>
+  <!-- Tibia -->
+  <rect x="100" y="10" width="50" height="100" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="125" y="8" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Tibia</text>
+  <!-- Malleolus lateralis -->
+  <ellipse cx="207" cy="118" rx="18" ry="12" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="230" y="122" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Mall. lat.</text>
+  <!-- Talus -->
+  <ellipse cx="155" cy="158" rx="42" ry="24" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="155" y="162" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Talus</text>
+  <!-- Calcaneus -->
+  <ellipse cx="120" cy="210" rx="50" ry="22" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="120" y="214" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Calcaneus</text>
+  <!-- ATFL -->
+  <line x1="194" y1="122" x2="148" y2="148" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+  <text x="152" y="136" font-size="8" fill="#c0392b" font-family="sans-serif" font-weight="bold">ATFL</text>
+  <!-- PTFL -->
+  <line x1="216" y1="118" x2="190" y2="148" stroke="#2c5f8a" stroke-width="3" stroke-linecap="round"/>
+  <text x="210" y="138" font-size="8" fill="#2c5f8a" font-family="sans-serif" font-weight="bold">PTFL</text>
+  <!-- CFL -->
+  <line x1="205" y1="128" x2="163" y2="202" stroke="#4a6741" stroke-width="3" stroke-linecap="round"/>
+  <text x="176" y="172" font-size="8" fill="#4a6741" font-family="sans-serif" font-weight="bold">CFL</text>
+  <!-- Legenda -->
+  <rect x="5" y="170" width="140" height="55" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="12" y1="182" x2="28" y2="182" stroke="#c0392b" stroke-width="2.5"/><text x="32" y="185" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. talofibulare anterius</text>
+  <line x1="12" y1="196" x2="28" y2="196" stroke="#2c5f8a" stroke-width="2.5"/><text x="32" y="199" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. talofibulare posterius</text>
+  <line x1="12" y1="210" x2="28" y2="210" stroke="#4a6741" stroke-width="2.5"/><text x="32" y="213" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. calcaneofibulare</text>
+</svg>`,
+    caption: "Art. talocruralis — laterale ligamenten van het enkelgewricht",
+  },
+
+  "Enkel mediaal": {
+    svg: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:240px;background:#fff;display:block">
+  <!-- Tibia -->
+  <rect x="110" y="10" width="50" height="100" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="135" y="8" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Tibia</text>
+  <!-- Malleolus medialis -->
+  <ellipse cx="115" cy="118" rx="18" ry="12" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="55" y="122" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Mall. med.</text>
+  <!-- Talus -->
+  <ellipse cx="165" cy="158" rx="42" ry="24" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="165" y="162" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Talus</text>
+  <!-- Calcaneus -->
+  <ellipse cx="195" cy="210" rx="50" ry="22" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="195" y="214" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Calcaneus</text>
+  <!-- Os naviculare -->
+  <ellipse cx="105" cy="185" rx="22" ry="13" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="105" y="189" text-anchor="middle" font-size="8" fill="#6b4f2a" font-family="sans-serif">Naviculare</text>
+  <!-- Deltoid — tibionavicularis -->
+  <line x1="110" y1="124" x2="107" y2="176" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+  <text x="50" y="155" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">tibio-</text>
+  <text x="45" y="165" font-size="7.5" fill="#c0392b" font-family="sans-serif">navicularis</text>
+  <!-- Deltoid — tibiocalcanearis -->
+  <line x1="113" y1="128" x2="175" y2="200" stroke="#4a6741" stroke-width="3" stroke-linecap="round"/>
+  <text x="135" y="172" font-size="7.5" fill="#4a6741" font-family="sans-serif" font-weight="bold">tibio-</text>
+  <text x="128" y="182" font-size="7.5" fill="#4a6741" font-family="sans-serif">calcanearis</text>
+  <!-- Deltoid brace -->
+  <path d="M103,118 Q112,108 122,118" stroke="#8a4a70" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+  <text x="88" y="108" font-size="9" fill="#8a4a70" font-family="sans-serif" font-weight="bold">Lig. deltoideum</text>
+  <!-- Legenda -->
+  <rect x="165" y="5" width="148" height="42" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="172" y1="17" x2="188" y2="17" stroke="#c0392b" stroke-width="2.5"/><text x="192" y="20" font-size="7.5" fill="#1a1410" font-family="sans-serif">pars tibionavicularis</text>
+  <line x1="172" y1="31" x2="188" y2="31" stroke="#4a6741" stroke-width="2.5"/><text x="192" y="34" font-size="7.5" fill="#1a1410" font-family="sans-serif">pars tibiocalcanearis</text>
+</svg>`,
+    caption: "Art. talocruralis — mediale ligamenten (lig. deltoideum)",
+  },
+
+  "Heup": {
+    svg: `<svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:270px;background:#fff;display:block">
+  <!-- Acetabulum (kom) -->
+  <ellipse cx="100" cy="115" rx="55" ry="58" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <ellipse cx="100" cy="115" rx="38" ry="40" fill="#f5efe6" stroke="#8a7560" stroke-width="1"/>
+  <text x="100" y="118" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Acetabulum</text>
+  <!-- SIAI label -->
+  <text x="60" y="64" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">SIAI</text>
+  <circle cx="72" cy="68" r="4" fill="#8a7560"/>
+  <!-- Femur shaft -->
+  <rect x="185" y="180" width="30" height="80" rx="5" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <!-- Caput femoris -->
+  <circle cx="148" cy="152" r="32" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="148" y="155" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Caput femoris</text>
+  <!-- Trochanter major -->
+  <ellipse cx="215" cy="195" rx="22" ry="14" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="240" y="198" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Troch. major</text>
+  <!-- Trochanter minor -->
+  <ellipse cx="195" cy="240" rx="14" ry="10" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="212" y="243" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Troch. minor</text>
+  <!-- Lig. iliofemorale (Y-band, rood) -->
+  <path d="M72,70 Q130,108 200,185" stroke="#c0392b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M72,70 Q100,130 193,238" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-dasharray="5,3" stroke-linecap="round"/>
+  <text x="108" y="105" font-size="8.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">Lig. iliofemorale (Y)</text>
+  <!-- Lig. pubofemorale (blauw) -->
+  <line x1="102" y1="168" x2="192" y2="238" stroke="#2c5f8a" stroke-width="3" stroke-linecap="round"/>
+  <text x="114" y="210" font-size="8" fill="#2c5f8a" font-family="sans-serif" font-weight="bold">Lig. pubofemorale</text>
+  <!-- Legenda -->
+  <rect x="5" y="230" width="150" height="42" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="12" y1="242" x2="28" y2="242" stroke="#c0392b" stroke-width="2.5"/><text x="32" y="245" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. iliofemorale (Y-band)</text>
+  <line x1="12" y1="257" x2="28" y2="257" stroke="#2c5f8a" stroke-width="2.5"/><text x="32" y="260" font-size="8" fill="#1a1410" font-family="sans-serif">Lig. pubofemorale</text>
+</svg>`,
+    caption: "Art. coxae — ligamenten van het heupgewricht (vooraanzicht)",
+  },
+
+  "Bekken": {
+    svg: `<svg viewBox="0 0 340 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:230px;background:#fff;display:block">
+  <!-- Sacrum -->
+  <path d="M140,20 L200,20 L215,100 L125,100 Z" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="170" y="60" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Sacrum</text>
+  <!-- Ilium links -->
+  <path d="M125,100 Q70,90 50,140 Q45,170 80,185" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <!-- Ilium rechts -->
+  <path d="M215,100 Q270,90 290,140 Q295,170 260,185" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <!-- Tuber ischiadicum L -->
+  <ellipse cx="80" cy="200" rx="20" ry="14" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="30" y="215" font-size="8" fill="#6b4f2a" font-family="sans-serif">Tub. ischiad.</text>
+  <!-- Tuber ischiadicum R -->
+  <ellipse cx="260" cy="200" rx="20" ry="14" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="262" y="215" font-size="8" fill="#6b4f2a" font-family="sans-serif">Tub. ischiad.</text>
+  <!-- Spina ischiadica L -->
+  <circle cx="65" cy="160" r="6" fill="#d4c4a0" stroke="#8a7560" stroke-width="1"/>
+  <text x="5" y="163" font-size="7.5" fill="#6b4f2a" font-family="sans-serif">Sp. ischiad.</text>
+  <!-- Spina ischiadica R -->
+  <circle cx="275" cy="160" r="6" fill="#d4c4a0" stroke="#8a7560" stroke-width="1"/>
+  <text x="284" y="163" font-size="7.5" fill="#6b4f2a" font-family="sans-serif">Sp. ischiad.</text>
+  <!-- Lig. sacrotuberale (oranje) -->
+  <line x1="135" y1="98" x2="82" y2="192" stroke="#c9962a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="205" y1="98" x2="258" y2="192" stroke="#c9962a" stroke-width="3" stroke-linecap="round"/>
+  <text x="50" y="148" font-size="7.5" fill="#c9962a" font-family="sans-serif" font-weight="bold">sacrotub.</text>
+  <!-- Lig. sacrospinale (rood) -->
+  <line x1="133" y1="96" x2="67" y2="158" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="5,3" stroke-linecap="round"/>
+  <line x1="207" y1="96" x2="273" y2="158" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="5,3" stroke-linecap="round"/>
+  <text x="88" y="120" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">sacrospinale</text>
+  <!-- SI-gewricht labels -->
+  <text x="108" y="94" font-size="7.5" fill="#4a6741" font-family="sans-serif">Art. sacroiliaca</text>
+  <!-- Legenda -->
+  <rect x="118" y="190" width="105" height="42" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="124" y1="202" x2="138" y2="202" stroke="#c9962a" stroke-width="2.5"/><text x="142" y="205" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. sacrotuberale</text>
+  <line x1="124" y1="216" x2="138" y2="216" stroke="#c0392b" stroke-width="2" stroke-dasharray="4,2"/><text x="142" y="219" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. sacrospinale</text>
+</svg>`,
+    caption: "Bekken — ligamenten van het sacrum en art. sacroiliaca",
+  },
+
+  "Schouder": {
+    svg: `<svg viewBox="0 0 340 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:250px;background:#fff;display:block">
+  <!-- Clavicula -->
+  <path d="M20,60 Q100,45 150,70" stroke="#8a7560" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <text x="65" y="42" font-size="9.5" fill="#6b4f2a" font-family="sans-serif">Clavicula</text>
+  <!-- Acromion -->
+  <ellipse cx="165" cy="68" rx="22" ry="12" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="165" y="56" text-anchor="middle" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Acromion</text>
+  <!-- Processus coracoideus -->
+  <ellipse cx="148" cy="98" rx="18" ry="10" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="100" y="100" font-size="8" fill="#6b4f2a" font-family="sans-serif">Proc. coracoideus</text>
+  <!-- Scapula (vereenvoudigd) -->
+  <path d="M145,68 Q135,120 130,200 Q160,215 190,200 Q185,120 175,68" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="158" y="170" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Scapula</text>
+  <!-- Cavitas glenoidalis -->
+  <ellipse cx="186" cy="112" rx="16" ry="22" fill="#f5efe6" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="205" y="115" font-size="8" fill="#6b4f2a" font-family="sans-serif">Gleno­id</text>
+  <!-- Humerus -->
+  <circle cx="232" cy="112" r="30" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="232" y="116" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Caput humeri</text>
+  <rect x="250" y="135" width="25" height="100" rx="8" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <!-- Lig. coracohumerale (rood) -->
+  <line x1="162" y1="94" x2="220" y2="96" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+  <text x="172" y="88" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">Lig. coracohumerale</text>
+  <!-- Lig. coracoclaviculare (blauw) -->
+  <line x1="155" y1="92" x2="152" y2="68" stroke="#2c5f8a" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="88" y="80" font-size="7.5" fill="#2c5f8a" font-family="sans-serif" font-weight="bold">Lig. coracoclaviculare</text>
+  <!-- Lig. acromioclaviculare (groen) -->
+  <line x1="155" y1="67" x2="145" y2="67" stroke="#4a6741" stroke-width="3" stroke-linecap="round"/>
+  <text x="70" y="50" font-size="7.5" fill="#4a6741" font-family="sans-serif">Lig. acromioclaviculare</text>
+  <line x1="120" y1="51" x2="145" y2="62" stroke="#4a6741" stroke-width="1" stroke-dasharray="3,2"/>
+  <!-- Legenda -->
+  <rect x="5" y="200" width="155" height="54" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="12" y1="212" x2="26" y2="212" stroke="#c0392b" stroke-width="2.5"/><text x="30" y="215" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. coracohumerale</text>
+  <line x1="12" y1="226" x2="26" y2="226" stroke="#2c5f8a" stroke-width="2.5"/><text x="30" y="229" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. coracoclaviculare</text>
+  <line x1="12" y1="240" x2="26" y2="240" stroke="#4a6741" stroke-width="2.5"/><text x="30" y="243" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. acromioclaviculare</text>
+</svg>`,
+    caption: "Art. humeri — ligamenten van het schoudergewricht",
+  },
+
+  "Elleboog": {
+    svg: `<svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:230px;background:#fff;display:block">
+  <!-- Humerus -->
+  <rect x="110" y="10" width="50" height="80" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="135" y="8" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Humerus</text>
+  <!-- Epicondylus medialis -->
+  <ellipse cx="100" cy="100" rx="18" ry="11" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="30" y="103" font-size="8" fill="#6b4f2a" font-family="sans-serif">Ep. med.</text>
+  <!-- Epicondylus lateralis -->
+  <ellipse cx="200" cy="100" rx="18" ry="11" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="210" y="103" font-size="8" fill="#6b4f2a" font-family="sans-serif">Ep. lat.</text>
+  <!-- Olecranon -->
+  <ellipse cx="135" cy="140" rx="22" ry="16" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="135" y="143" text-anchor="middle" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Olecranon</text>
+  <!-- Ulna -->
+  <rect x="118" y="152" width="32" height="75" rx="5" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="134" y="232" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Ulna</text>
+  <!-- Radius -->
+  <rect x="170" y="135" width="28" height="75" rx="5" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="184" y="225" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Radius</text>
+  <!-- Lig. collaterale ulnare (mediaal, groen) -->
+  <line x1="98" y1="109" x2="115" y2="148" stroke="#4a6741" stroke-width="3.5" stroke-linecap="round"/>
+  <text x="22" y="133" font-size="7.5" fill="#4a6741" font-family="sans-serif" font-weight="bold">Lig. coll.</text>
+  <text x="22" y="143" font-size="7.5" fill="#4a6741" font-family="sans-serif">ulnare</text>
+  <!-- Lig. collaterale radiale (lateraal, rood) -->
+  <line x1="200" y1="109" x2="175" y2="135" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+  <text x="210" y="126" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">Lig. coll.</text>
+  <text x="210" y="136" font-size="7.5" fill="#c0392b" font-family="sans-serif">radiale</text>
+  <!-- Lig. anulare radii (blauw, cirkel) -->
+  <ellipse cx="184" cy="152" rx="16" ry="10" fill="none" stroke="#2c5f8a" stroke-width="2.5" stroke-dasharray="5,3"/>
+  <text x="205" y="155" font-size="7.5" fill="#2c5f8a" font-family="sans-serif">Lig. anulare</text>
+  <!-- Legenda -->
+  <rect x="5" y="188" width="130" height="44" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="12" y1="200" x2="26" y2="200" stroke="#4a6741" stroke-width="2.5"/><text x="30" y="203" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. coll. ulnare</text>
+  <line x1="12" y1="214" x2="26" y2="214" stroke="#c0392b" stroke-width="2.5"/><text x="30" y="217" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. coll. radiale</text>
+  <line x1="12" y1="224" x2="26" y2="224" stroke="#2c5f8a" stroke-width="2" stroke-dasharray="4,2"/><text x="30" y="227" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. anulare radii</text>
+</svg>`,
+    caption: "Art. cubiti — ligamenten van het ellebooggewricht",
+  },
+
+  "Pols": {
+    svg: `<svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:215px;background:#fff;display:block">
+  <!-- Radius -->
+  <rect x="70" y="10" width="55" height="80" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="97" y="8" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Radius</text>
+  <!-- Ulna -->
+  <rect x="165" y="10" width="45" height="80" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="187" y="8" text-anchor="middle" font-size="10" fill="#6b4f2a" font-family="sans-serif">Ulna</text>
+  <!-- Proc. styloideus radii -->
+  <ellipse cx="75" cy="98" rx="12" ry="8" fill="#d4c4a0" stroke="#8a7560" stroke-width="1"/>
+  <text x="20" y="105" font-size="7.5" fill="#6b4f2a" font-family="sans-serif">Styl. radii</text>
+  <!-- Proc. styloideus ulnae -->
+  <ellipse cx="205" cy="98" rx="12" ry="8" fill="#d4c4a0" stroke="#8a7560" stroke-width="1"/>
+  <text x="218" y="100" font-size="7.5" fill="#6b4f2a" font-family="sans-serif">Styl. ulnae</text>
+  <!-- Carpale rij (vereenvoudigd) -->
+  <rect x="60" y="120" width="60" height="30" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="90" y="138" text-anchor="middle" font-size="8" fill="#6b4f2a" font-family="sans-serif">Scaph. / Lunate</text>
+  <rect x="130" y="120" width="60" height="30" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="160" y="138" text-anchor="middle" font-size="8" fill="#6b4f2a" font-family="sans-serif">Triquetr. / Pis.</text>
+  <!-- Lig. collaterale carpi radiale (groen) -->
+  <line x1="73" y1="103" x2="70" y2="120" stroke="#4a6741" stroke-width="3" stroke-linecap="round"/>
+  <text x="12" y="117" font-size="7.5" fill="#4a6741" font-family="sans-serif" font-weight="bold">Lig. coll.</text>
+  <text x="12" y="127" font-size="7.5" fill="#4a6741" font-family="sans-serif">carpi rad.</text>
+  <!-- Lig. collaterale carpi ulnare (rood) -->
+  <line x1="205" y1="103" x2="190" y2="120" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+  <text x="215" y="117" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">Lig. coll.</text>
+  <text x="215" y="127" font-size="7.5" fill="#c0392b" font-family="sans-serif">carpi uln.</text>
+  <!-- Lig. radiocarpale (blauw boog) -->
+  <path d="M76,100 Q138,108 204,100" stroke="#2c5f8a" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+  <text x="105" y="113" font-size="7.5" fill="#2c5f8a" font-family="sans-serif">Lig. radiocarpale</text>
+  <!-- Legenda -->
+  <rect x="60" y="168" width="145" height="44" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="67" y1="180" x2="81" y2="180" stroke="#4a6741" stroke-width="2.5"/><text x="85" y="183" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. coll. carpi radiale</text>
+  <line x1="67" y1="194" x2="81" y2="194" stroke="#c0392b" stroke-width="2.5"/><text x="85" y="197" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. coll. carpi ulnare</text>
+  <line x1="67" y1="204" x2="81" y2="204" stroke="#2c5f8a" stroke-width="2" stroke-dasharray="4,2"/><text x="85" y="207" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. radiocarpale</text>
+</svg>`,
+    caption: "Art. radiocarpalis — ligamenten van de pols",
+  },
+
+  "Wervelkolom": {
+    svg: `<svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:250px;background:#fff;display:block">
+  <!-- 3 wervels -->
+  ${[0,1,2].map(i => `
+  <rect x="80" y="${30 + i*70}" width="100" height="50" rx="6" fill="#e8d5b0" stroke="#8a7560" stroke-width="1.5"/>
+  <rect x="180" y="${42 + i*70}" width="50" height="26" rx="4" fill="#e0d4b8" stroke="#8a7560" stroke-width="1"/>
+  <text x="130" y="${58 + i*70}" text-anchor="middle" font-size="9" fill="#6b4f2a" font-family="sans-serif">Corpus vertebrae</text>
+  <text x="204" y="${58 + i*70}" text-anchor="middle" font-size="7.5" fill="#8a7560" font-family="sans-serif">Proc. spin.</text>
+  `).join('')}
+  <!-- Discus intervertebralis -->
+  <rect x="84" y="78" width="92" height="14" rx="3" fill="#c8d4c0" stroke="#4a6741" stroke-width="1.5"/>
+  <text x="130" y="89" text-anchor="middle" font-size="7.5" fill="#4a6741" font-family="sans-serif">Discus intervertebralis</text>
+  <rect x="84" y="148" width="92" height="14" rx="3" fill="#c8d4c0" stroke="#4a6741" stroke-width="1.5"/>
+  <!-- Lig. longitudinale anterius (rood, links) -->
+  <line x1="78" y1="30" x2="78" y2="220" stroke="#c0392b" stroke-width="4" stroke-linecap="round"/>
+  <text x="5" y="130" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold" transform="rotate(-90,22,130)">Lig. longitudinale ant.</text>
+  <!-- Lig. longitudinale posterius (blauw, rechts van corpus) -->
+  <line x1="182" y1="30" x2="182" y2="220" stroke="#2c5f8a" stroke-width="3" stroke-dasharray="6,3" stroke-linecap="round"/>
+  <!-- Lig. flavum (goud, tussen laminae) -->
+  <line x1="220" y1="68" x2="220" y2="92" stroke="#c9962a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="220" y1="138" x2="220" y2="162" stroke="#c9962a" stroke-width="4" stroke-linecap="round"/>
+  <text x="233" y="82" font-size="7.5" fill="#c9962a" font-family="sans-serif" font-weight="bold">Lig. flavum</text>
+  <!-- Lig. interspinale -->
+  <line x1="204" y1="68" x2="204" y2="92" stroke="#8a4a70" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="204" y1="138" x2="204" y2="162" stroke="#8a4a70" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Legenda -->
+  <rect x="5" y="200" width="165" height="54" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="12" y1="212" x2="26" y2="212" stroke="#c0392b" stroke-width="3"/><text x="30" y="215" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. longitudinale anterius</text>
+  <line x1="12" y1="226" x2="26" y2="226" stroke="#2c5f8a" stroke-width="2" stroke-dasharray="5,2"/><text x="30" y="229" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. longitudinale posterius</text>
+  <line x1="12" y1="240" x2="26" y2="240" stroke="#c9962a" stroke-width="3"/><text x="30" y="243" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. flavum</text>
+</svg>`,
+    caption: "Columna vertebralis — ligamenten van de wervelkolom (zijaanzicht)",
+  },
+
+  "Voetzool": {
+    svg: `<svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:230px;background:#fff;display:block">
+  <!-- Voetzool omtrek -->
+  <path d="M80,220 Q40,200 35,150 Q30,80 70,40 Q100,15 130,20 Q165,15 185,30 Q210,50 215,100 Q220,160 200,200 Q170,225 140,228 Z" fill="#e8d5b0" stroke="#8a7560" stroke-width="2"/>
+  <!-- Calcaneus -->
+  <ellipse cx="75" cy="195" rx="32" ry="22" fill="#d4c4a0" stroke="#8a7560" stroke-width="1.5"/>
+  <text x="75" y="199" text-anchor="middle" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Calcaneus</text>
+  <!-- Cuboideum -->
+  <ellipse cx="100" cy="140" rx="22" ry="16" fill="#e0d4b8" stroke="#8a7560" stroke-width="1"/>
+  <text x="100" y="143" text-anchor="middle" font-size="7.5" fill="#8a7560" font-family="sans-serif">Cuboid.</text>
+  <!-- Metatarsi (vereenvoudigd) -->
+  ${[0,1,2,3,4].map(i => `<rect x="${82+i*22}" y="${42}" width="14" height="55" rx="4" fill="#e8d5b0" stroke="#8a7560" stroke-width="1"/>`).join('')}
+  <text x="148" y="38" text-anchor="middle" font-size="8.5" fill="#6b4f2a" font-family="sans-serif">Ossa metatarsi I–V</text>
+  <!-- Lig. plantare longum (rood, groot) -->
+  <path d="M72,185 Q110,160 178,110" stroke="#c0392b" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="95" y="175" font-size="7.5" fill="#c0392b" font-family="sans-serif" font-weight="bold">Lig. plantare longum</text>
+  <!-- Lig. calcaneonaviculare plantare (blauw) -->
+  <path d="M88,175 Q115,165 135,152" stroke="#2c5f8a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <text x="96" y="162" font-size="7" fill="#2c5f8a" font-family="sans-serif" font-weight="bold">Lig. calcaneonaviculare</text>
+  <!-- Fascia plantaris (goud, pijl) -->
+  <path d="M76,180 L76,95" stroke="#c9962a" stroke-width="2.5" stroke-dasharray="6,3" fill="none"/>
+  <text x="40" y="140" font-size="7.5" fill="#c9962a" font-family="sans-serif" font-weight="bold" transform="rotate(-90,40,140)">Fascia plantaris</text>
+  <!-- Legenda -->
+  <rect x="155" y="170" width="140" height="54" rx="3" fill="#faf6ef" stroke="#ede4d3"/>
+  <line x1="162" y1="182" x2="176" y2="182" stroke="#c0392b" stroke-width="2.5"/><text x="180" y="185" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. plantare longum</text>
+  <line x1="162" y1="196" x2="176" y2="196" stroke="#2c5f8a" stroke-width="2.5"/><text x="180" y="199" font-size="7.5" fill="#1a1410" font-family="sans-serif">Lig. calcaneonaviculare</text>
+  <line x1="162" y1="210" x2="176" y2="210" stroke="#c9962a" stroke-width="2" stroke-dasharray="4,2"/><text x="180" y="213" font-size="7.5" fill="#1a1410" font-family="sans-serif">Fascia plantaris</text>
+</svg>`,
+    caption: "Voetzool — plantaire ligamenten (pes, aanzicht van onderaf)",
+  },
+};
+
+
+// ============================
 // STATE
 // ============================
 let currentFilter = 'all';
@@ -1075,9 +1512,21 @@ function showLigamentQuestion(lig) {
 
   document.getElementById('question-type').textContent = `🔗 Ligament verbinding — ${lig.regio}`;
   document.getElementById('question-text').textContent = lig.name;
-  document.getElementById('question-hint').textContent = askVan
-    ? `Dit ligament hecht aan de andere kant aan: ${otherSide} — waar hecht het vandáán?`
-    : `Dit ligament vertrekt vanuit: ${otherSide} — waar hecht het náár toe?`;
+
+  // Build hint with optional image
+  const img = REGION_IMAGES[lig.regio];
+  const imgHtml = img ? `
+    <div class="quiz-img-box">
+      ${img.svg}
+      <div class="img-caption">${img.caption}</div>
+    </div>` : '';
+
+  document.getElementById('question-hint').innerHTML = `
+    ${imgHtml}
+    <span style="font-style:italic;color:var(--muted);font-size:0.82rem">${askVan
+      ? `Hecht aan de andere kant aan: <strong>${otherSide}</strong> — waar vertrekt het <em>vandáán</em>?`
+      : `Vertrekt vanuit: <strong>${otherSide}</strong> — waar hecht het <em>náár toe</em>?`
+    }</span>`;
 
   // Wrong options: other structures from other ligaments in LIGAMENTS pool
   const wrongPool = shuffle(LIGAMENTS.filter(l => l !== lig));
@@ -1087,7 +1536,6 @@ function showLigamentQuestion(lig) {
     if (!wrongs.includes(candidate) && candidate !== correct) wrongs.push(candidate);
     if (wrongs.length >= 3) break;
   }
-  // Fill up if needed with the other side of same pool
   if (wrongs.length < 3) {
     for (const l of wrongPool) {
       const candidate = askVan ? l.naar : l.van;
@@ -1203,36 +1651,42 @@ function renderAnat() {
   const list = document.getElementById('term-list');
 
   if (currentAnatFilter === 'ligconnect') {
-    // Group by regio
     const byRegio = {};
     LIGAMENTS.forEach(l => {
       if (!byRegio[l.regio]) byRegio[l.regio] = [];
       byRegio[l.regio].push(l);
     });
-    list.innerHTML = Object.entries(byRegio).map(([regio, ligs]) => `
-      <div style="margin-bottom:1.5rem">
-        <div style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.4rem 0;border-bottom:1px solid var(--parchment);margin-bottom:0.5rem">${regio}</div>
-        ${ligs.map(l => `
-          <div class="term-item" onclick="this.classList.toggle('expanded')" style="grid-template-columns:1fr">
-            <div style="display:flex;justify-content:space-between;align-items:start">
-              <div>
-                <span class="term-tag tag-ligament">🔗 Ligament</span>
-                <div class="term-latin">${l.name}</div>
-                <div style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">${l.nl}</div>
+    list.innerHTML = Object.entries(byRegio).map(([regio, ligs]) => {
+      const img = REGION_IMAGES[regio];
+      const imgHtml = img ? `
+        <div class="anat-img-box">
+          ${img.svg}
+          <div class="img-caption">${img.caption}</div>
+        </div>` : '';
+      return `
+        <div style="margin-bottom:2rem">
+          <div style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.4rem 0;border-bottom:1px solid var(--parchment);margin-bottom:0.75rem">${regio}</div>
+          ${imgHtml}
+          ${ligs.map(l => `
+            <div class="term-item" onclick="this.classList.toggle('expanded')" style="grid-template-columns:1fr;margin-bottom:0.4rem">
+              <div style="display:flex;justify-content:space-between;align-items:start">
+                <div>
+                  <span class="term-tag tag-ligament">🔗 Ligament</span>
+                  <div class="term-latin">${l.name}</div>
+                  <div style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">${l.nl}</div>
+                </div>
+                <span style="font-size:0.7rem;color:var(--gold);font-family:'DM Mono',monospace;padding-top:0.3rem">↓ klik</span>
+              </div>
+              <div class="term-breakdown">
+                <div style="display:grid;grid-template-columns:auto 1fr;gap:0.3rem 0.75rem;margin-top:0.5rem;font-size:0.82rem">
+                  <span style="color:var(--gold);font-weight:600">Van:</span><span>${l.van}</span>
+                  <span style="color:var(--rust);font-weight:600">Naar:</span><span>${l.naar}</span>
+                </div>
               </div>
             </div>
-            <div class="term-breakdown" style="display:none">
-              <div style="display:grid;grid-template-columns:auto 1fr;gap:0.3rem 0.75rem;margin-top:0.5rem">
-                <span style="color:var(--gold);font-weight:600">Van:</span><span>${l.van}</span>
-                <span style="color:var(--rust);font-weight:600">Naar:</span><span>${l.naar}</span>
-              </div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `).join('');
-    // Fix expanded toggle for these items
-    list.querySelectorAll('.term-breakdown').forEach(el => el.style.display = '');
+          `).join('')}
+        </div>`;
+    }).join('');
     return;
   }
 
